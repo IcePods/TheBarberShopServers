@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.barbershop.bean">
+	<class name="Shop">
+		<id name="shopId" column="shop_id">
+			<generator class="increment"/>
+		</id>
+		<property name="shopName" column="shop_name"/>
+		<property name="shopPhone" column="shop_phone"/>
+		<property name="shopAddress" column="shop_address"/>
+		<property name="shopIntroduce" column="shop_introduce"/>
+		<property name="shopPicture" column="shop_picture"/>
+		<set name="UsersSet" table="collection"   
+        	inverse="false">
+    		<key column="shop_id"/>
+    		<many-to-many class="Users" column="user_id"/>
+		</set>
+		<set name="ShopPictureSet" cascade="delete">
+    		<key column="shop_id"/>
+    		<one-to-many class="ShopPicture" />
+		</set>
+		<set name="HairStyleSet" cascade="delete">
+    		<key column="shop_id"/>
+    		<one-to-many class="HairStyle" />
+		</set>
+		
+	
+	</class>
+
+</hibernate-mapping>
