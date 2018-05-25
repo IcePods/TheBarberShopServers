@@ -27,24 +27,47 @@ public class UsersAction {
 		 
 	}
 	
+	
+	/**
+	 * 登录验证
+	 * @param request
+	 * @param response
+	 * @param user
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
 	public Users loginCheck(HttpServletRequest request,HttpServletResponse response,@RequestBody Users user) {
 		String account = user.getUserAccount();
 		String pwd = user.getUserPassword();
-		Users mUser = (Users) us.queryUser(account);
-		return mUser;
+		if(us.isEmpty(account)) {
+			return null;
+		}else {
+			Users mUser = (Users)us.queryUser(account);
+			if(pwd.equals(mUser.getUserPassword())) {
+				return mUser;
+			}else {
+				return null;
+			}
+		}
 	}
 	
+	/**
+	 * 注册
+	 * @param request
+	 * @param response
+	 * @param user
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public boolean register(HttpServletRequest request,HttpServletResponse response,@RequestBody Users user) {
+	public String register(HttpServletRequest request,HttpServletResponse response,@RequestBody Users user) {
 		String account = user.getUserAccount();
 		if(us.isEmpty(account)) {
 			us.insert(user);
-			return true;
+			return "success";
 		}else {
-			return false;
+			return "failure";
 		}
 	}
 	
