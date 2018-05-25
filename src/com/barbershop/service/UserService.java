@@ -17,5 +17,20 @@ public class UserService {
 	public void insert(Users user) {
 		 userDao.saveUsers(user);
 	}
-
+	
+	//获取用户信息
+	public Users queryUser(String account) {
+		return (Users)userDao.queryUser(account);
+	}
+	
+	//判断用户是否存在
+	public boolean isEmpty(String account) {
+		Users user = userDao.queryUser(account);
+		if(user == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

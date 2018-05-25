@@ -15,6 +15,10 @@ public class UserDao {
 	@Autowired
 	private  SessionFactory sessionFactory;
 
+	private Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
+
 	
 	public void saveUsers(Users user) {		
 		Session session = sessionFactory.openSession();
@@ -22,5 +26,13 @@ public class UserDao {
 
 		session.save(user);
 		tran.commit();
+	}
+	
+	public Users queryUser(String account) {
+		Users user = (Users)this.getSession()
+				.createQuery("from Users where UserAccount = ?")
+				.setParameter(0, account)
+				.uniqueResult();
+		return user;
 	}
 }
