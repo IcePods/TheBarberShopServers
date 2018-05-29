@@ -1,5 +1,8 @@
 package com.barbershop.action;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,19 +15,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.barbershop.bean.Users;
 import com.barbershop.service.UserService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import sun.misc.BASE64Decoder;
 
 @Controller
 public class UsersAction {
 	@Autowired
 	private  UserService us;
 	
-	@RequestMapping("/save")
-	public void  insert() {
-		Users user = new Users();
-		user.setUserAccount("张三");
-		user.setUserPassword("45545");		
-		us.insert(user);
-		 
+	@RequestMapping(value = "/asc", method = RequestMethod.POST)
+	public void  insert( @RequestBody String data ) throws IOException {
+		System.out.println("测试数据");
+		System.out.println(data);
+		byte[] bs = new BASE64Decoder().decodeBuffer(data);
+        // 写到D盘Img文件夹下的a.jpg文件。注：Img文件夹一定要存在
+        FileOutputStream fos = new FileOutputStream("D:/Img/abc.png");
+        fos.write(bs);
+        fos.flush();
+        fos.close();
+
 	}
 	
 	
@@ -59,16 +70,23 @@ public class UsersAction {
 	 * @param user
 	 * @return
 	 */
-	@ResponseBody
+	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(HttpServletRequest request,HttpServletResponse response,@RequestBody Users user) {
-		String account = user.getUserAccount();
-		if(us.isEmpty(account)) {
+	@ResponseBody
+	public Users register(HttpServletRequest request,HttpServletResponse response, @RequestBody String data) {
+		System.out.println("注册验证"+data);
+		Gson gson = new GsonBuilder()
+				.serializeNulls()
+				.setPrettyPrinting()
+				.create();
+		Users user = gson.fromJson(data, Users.class);
+		if(us.isEmpty(user.getUserAccount())) {
 			us.insert(user);
-			return "success";
+			return user;
 		}else {
-			return "failure";
+			return null;
 		}
+		
 	}
 	
 }

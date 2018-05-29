@@ -13,15 +13,15 @@
 		<property name="shopIntroduce" column="shop_introduce"/>
 		<property name="shopPicture" column="shop_picture"/>
 		<set name="UsersSet" table="collection"   
-        	inverse="false">
+        	inverse="false" lazy="false">
     		<key column="shop_id"/>
     		<many-to-many class="Users" column="user_id"/>
 		</set>
-		<set name="ShopPictureSet" cascade="delete">
+		<set name="ShopPictureSet" cascade="delete" lazy="false">
     		<key column="shop_id"/>
     		<one-to-many class="ShopPicture" />
 		</set>
-		<set name="HairStyleSet" cascade="delete">
+		<set name="HairStyleSet" cascade="delete" lazy="false">
     		<key column="shop_id"/>
     		<one-to-many class="HairStyle" />
 		</set>

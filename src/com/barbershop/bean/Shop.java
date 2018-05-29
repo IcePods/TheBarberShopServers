@@ -3,6 +3,9 @@ package com.barbershop.bean;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Shop {
 	private int shopId;
     private String shopPicture;
@@ -17,15 +20,15 @@ public class Shop {
 	
 	//店铺与发型 一对多双向映射
 	private Set<HairStyle> HairStyleSet = new HashSet<HairStyle>();
-
+	@JsonProperty("shopId")
 	public int getShopId() {
 		return shopId;
 	}
-
+	
 	public void setShopId(int shopId) {
 		this.shopId = shopId;
 	}
-
+	@JsonProperty("shopPicture")
 	public String getShopPicture() {
 		return shopPicture;
 	}
@@ -33,7 +36,7 @@ public class Shop {
 	public void setShopPicture(String shopPicture) {
 		this.shopPicture = shopPicture;
 	}
-
+	@JsonProperty("shopName")
 	public String getShopName() {
 		return shopName;
 	}
@@ -41,7 +44,7 @@ public class Shop {
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
 	}
-
+	@JsonProperty("shopAddress")
 	public String getShopAddress() {
 		return shopAddress;
 	}
@@ -49,7 +52,7 @@ public class Shop {
 	public void setShopAddress(String shopAddress) {
 		this.shopAddress = shopAddress;
 	}
-
+	@JsonProperty("shopPhone")
 	public String getShopPhone() {
 		return shopPhone;
 	}
@@ -57,7 +60,7 @@ public class Shop {
 	public void setShopPhone(String shopPhone) {
 		this.shopPhone = shopPhone;
 	}
-
+	@JsonProperty("shopIntroduce")
 	public String getShopIntroduce() {
 		return shopIntroduce;
 	}
@@ -65,7 +68,7 @@ public class Shop {
 	public void setShopIntroduce(String shopIntroduce) {
 		this.shopIntroduce = shopIntroduce;
 	}
-
+	@JsonProperty("UsersSet")
 	public Set<Users> getUsersSet() {
 		return UsersSet;
 	}
@@ -73,7 +76,8 @@ public class Shop {
 	public void setUsersSet(Set<Users> usersSet) {
 		UsersSet = usersSet;
 	}
-
+	
+	@JsonProperty("ShopPictureSet")
 	public Set<ShopPicture> getShopPictureSet() {
 		return ShopPictureSet;
 	}
@@ -81,7 +85,8 @@ public class Shop {
 	public void setShopPictureSet(Set<ShopPicture> shopPictureSet) {
 		ShopPictureSet = shopPictureSet;
 	}
-
+	
+	@JsonProperty("HairStyleSet")
 	public Set<HairStyle> getHairStyleSet() {
 		return HairStyleSet;
 	}
