@@ -2,6 +2,8 @@ package com.barbershop.action;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.barbershop.bean.Users;
 import com.barbershop.service.UserService;
+import com.barbershop.utils.userPictureUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -25,17 +28,23 @@ public class UsersAction {
 	@Autowired
 	private  UserService us;
 	
+	private userPictureUtil userPicUtil;
+	
 	@RequestMapping(value = "/asc", method = RequestMethod.POST)
 	public void  insert( @RequestBody String data ) throws IOException {
 		System.out.println("测试数据");
 		System.out.println(data);
-		byte[] bs = new BASE64Decoder().decodeBuffer(data);
-        // 写到D盘Img文件夹下的a.jpg文件。注：Img文件夹一定要存在
-        FileOutputStream fos = new FileOutputStream("D:/Img/abc.png");
-        fos.write(bs);
-        fos.flush();
-        fos.close();
-
+		//初始化文件目录
+		userPicUtil.initUserFileDirectory();
+		List<String> picList = new ArrayList<String>();
+		for(int i=0;i<5;i++) {
+			picList.add(data);
+		}
+		List<String> picPath = userPicUtil.receivePicture(picList);
+		for(int i=0;i<picPath.size();i++) {
+			System.out.println(picPath.get(i));
+		}
+		
 	}
 	
 	
