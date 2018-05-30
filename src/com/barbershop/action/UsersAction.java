@@ -36,6 +36,7 @@ public class UsersAction {
 		System.out.println(data);
 		//初始化文件目录
 		userPicUtil.initUserFileDirectory();
+		//模拟多图上传
 		List<String> picList = new ArrayList<String>();
 		for(int i=0;i<5;i++) {
 			picList.add(data);
