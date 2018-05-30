@@ -33,8 +33,8 @@ public class UsersAction {
 	@RequestMapping(value = "/asc", method = RequestMethod.POST)
 	public void  insert( @RequestBody String data ) throws IOException {
 		System.out.println("测试数据");
-		System.out.println(data);
 		//初始化文件目录
+		userPicUtil = new userPictureUtil();
 		userPicUtil.initUserFileDirectory();
 		//模拟多图上传
 		List<String> picList = new ArrayList<String>();
