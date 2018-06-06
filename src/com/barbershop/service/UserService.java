@@ -13,9 +13,10 @@ import com.barbershop.dao.UserDao;
 public class UserService {
 	@Autowired
 	private UserDao userDao;
-	
-	public void insert(Users user) {
+	//注册用户 返回用户
+	public Users insert(Users user) {
 		 userDao.saveUsers(user);
+		 return user;
 	}
 	
 	//获取用户信息
@@ -31,6 +32,18 @@ public class UserService {
 		} else {
 			return false;
 		}
+	}
+	//验证用户账户与密码是否匹配
+	public Users checkLoginUser(String account,String pwd) {
+		return userDao.checkLoginUser(account, pwd);
+	}
+	//登录操作 添加token
+	public Users LoginAddToken(Users user) {
+		return userDao.LoginAddToken(user);
+	}
+	//更新用户属性
+	public Users UpdateUseAttribute(Users user) {
+		return userDao.UpdateUseAttribute(user);
 	}
 	
 }

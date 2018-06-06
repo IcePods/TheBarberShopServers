@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.barbershop.bean">
+	<class name="Barber" lazy="false" >
+		<id name="barberId" column="barber_id"><!-- 此行的ID，为对象的属性ID -->
+			<generator class="foreign"><!-- foreign主键生成器 -->
+				<param name="property">user</param>
+			</generator>
+		</id>
+		<property name="barberImg"  column="barber_img"/>
+		<property name="barberName" column="barber_name" />
+			
+		<!-- users 与 barber 一对一主键关联映射 -->
+		<one-to-one name="user" constrained="true" outer-join="false" ></one-to-one>
+		
+		<!-- barber 与  shop 多对一关联映射 -->
+	</class>
+</hibernate-mapping>

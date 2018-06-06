@@ -13,9 +13,9 @@
 		<property name="UserSex" column="user_sex"/>
 		<property name="UserPhone" column="user_phone"/>
 		<property name="UserHeader" column="user_header"/>
+		<property name="UserToken" column="user_token"></property>
 		
-		<set name="ShopSet" table="collection"   
-        	inverse="true">
+		<set name="ShopSet" table="collection" lazy="false" inverse="true">
     		<key column="user_id"/>
     		<many-to-many class="Shop" column="shop_id"/>
 		</set>

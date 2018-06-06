@@ -21,7 +21,7 @@ public class ShopAction {
 	public List<Shop> showAllShop() {
 		System.out.println("店铺请求");
 		List<Shop> Shoplist = ss.getAllShop();
-		System.out.println(Shoplist.get(1).getShopName());
+		System.out.println("店铺加载成功！");
 		return Shoplist;
 	}
 //	@ResponseBody

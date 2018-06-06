@@ -25,6 +25,10 @@
     		<key column="shop_id"/>
     		<one-to-many class="HairStyle" />
 		</set>
+		<set name="BarberSet" cascade="delete" lazy="false">
+    		<key column="shop_id"/>
+    		<one-to-many class="Barber" />
+		</set>
 		
 	
 	</class>

@@ -21,8 +21,8 @@ public class HairStyleService {
 		return hsDao.getHairStyleByTyple(type);
 	}
 		
-	// 从店铺  查看 发型 根据 店铺 获取 集合
-	public List<HairStyle> getHairStyleByShop(Shop shop){
-		return hsDao.getHairStyleByShop(shop);
+	// 从店铺和类型参数  查看 发型 根据 店铺 获取 集合
+	public List<HairStyle> getHairStyleByShop(Shop shop,String type){
+		return hsDao.getHairStyleByShop(shop,type);
 	}
 }

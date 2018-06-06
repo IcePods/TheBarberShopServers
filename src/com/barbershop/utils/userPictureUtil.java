@@ -17,9 +17,9 @@ public class userPictureUtil {
 	//用户动态图片存储的绝对路径
 	private final String USER_DYNAMIC = "E://eclipse_workspace/theBarberShopServiceImageResource/user/dynamic";
 	//访问用户头像图片的虚拟路径
-	private final String USER_HEAD_PATH = "/theBarberShopServers/resource/user/head";
+	private final String USER_HEAD_PATH = "resource/user/head";
 	//访问用户动态图片的虚拟路径
-	private final String USER_DYNAMIC_PATH = "/theBarberShopServers/resource/user/dynamic";
+	private final String USER_DYNAMIC_PATH = "resource/user/dynamic";
 	/**
 	 * 初始化用户图片资源目录,用户注册时调用一次
 	 */

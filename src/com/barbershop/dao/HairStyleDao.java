@@ -28,10 +28,11 @@ public class HairStyleDao {
 		return list;
 	}
 	// 从店铺  查看 发型 根据 店铺 获取 集合
-	public List<HairStyle> getHairStyleByShop(Shop shop){
+	public List<HairStyle> getHairStyleByShop(Shop shop,String type){
 		Session session = this.getSession();
-		Query query = session.createQuery("from HairStyle hs where hs.shop=?");
+		Query<HairStyle> query = session.createQuery("from HairStyle hs where hs.shop=? and hs.hairstyleType=? ");
 		query.setParameter(0, shop);
+		query.setParameter(1, type);
 		List<HairStyle> list = query.list();
 		return list;
 	}

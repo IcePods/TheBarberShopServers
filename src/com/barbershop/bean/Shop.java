@@ -19,6 +19,9 @@ public class Shop {
 	
 	//店铺与发型 一对多双向映射
 	private Set<HairStyle> HairStyleSet = new HashSet<HairStyle>();
+	
+	//店铺与 理发师 一对多 单项映射
+	private Set<Barber> BarberSet = new HashSet<Barber>();
 	@JsonProperty("shopId")
 	public int getShopId() {
 		return shopId;
@@ -92,6 +95,14 @@ public class Shop {
 
 	public void setHairStyleSet(Set<HairStyle> hairStyleSet) {
 		HairStyleSet = hairStyleSet;
+	}
+	@JsonProperty("BarberSet")
+	public Set<Barber> getBarberSet() {
+		return BarberSet;
+	}
+
+	public void setBarberSet(Set<Barber> barberSet) {
+		BarberSet = barberSet;
 	}
 	
 	
