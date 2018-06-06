@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.barbershop.bean">
+	<class name="Activity" table="activity">
+		<id name="activityId" column="activity_id" >
+			<generator class="increment"/>
+		</id>
+		<property name="activityName"  column="activity_name"/>
+		<property name="activityContent" column="activity_content" />
+		<property name="activityStartTime" column="activity_time_start"/>
+		<property name="activityEndTime" column="activity_time_end"></property>
+		<!-- 与shop双向多对一 -->
+		<many-to-one name="shop" column="shop_id" class="Shop" lazy="false"/>
+	</class>
+
+</hibernate-mapping>
