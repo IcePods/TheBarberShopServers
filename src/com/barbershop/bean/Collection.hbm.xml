@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.barbershop.bean">
+	<class name="Collections" lazy="false">
+	 	<id name="collection_id" column="collection_id">
+			<generator class="increment"/>
+		</id>
+		<!--收藏与店铺单项多对一  -->
+		<many-to-one name="shop" class="Shop" column="shop_id" lazy="false" outer-join="false" ></many-to-one>
+		<many-to-one name="user" class="Users" column="user_id" lazy="false" outer-join="false" ></many-to-one>
+	</class>
+</hibernate-mapping>

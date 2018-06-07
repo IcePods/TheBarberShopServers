@@ -16,7 +16,8 @@ public class Users {
     private String UserToken;
     //不进行持久化  只用来判断 用户状态 ：用户名密码错误、注册错误、 等   默认为True 用户合法
     private Boolean UserCondition = true;
-	private Set<Shop> ShopSet = new HashSet<Shop>();
+    
+	private Set<Collections> ShopCollectionSet = new HashSet<Collections>();
 	
 	@JsonProperty("UserId")
 	public int getUserId() {
@@ -67,13 +68,7 @@ public class Users {
 	public void setUserHeader(String userHeader) {
 		UserHeader = userHeader;
 	}
-	public Set<Shop> getShopSet() {
-		return ShopSet;
-	}
-	@JsonProperty("ShopSet")
-	public void setShopSet(Set<Shop> shopSet) {
-		ShopSet = shopSet;
-	}
+
 	@JsonProperty("UserToken")
 	public String getUserToken() {
 		return UserToken;
@@ -88,6 +83,14 @@ public class Users {
 	public void setUserCondition(Boolean userCondition) {
 		UserCondition = userCondition;
 	}
+	@JsonProperty("ShopCollectionSet")
+	public Set<Collections> getShopCollectionSet() {
+		return ShopCollectionSet;
+	}
+	public void setShopCollectionSet(Set<Collections> shopCollectionSet) {
+		ShopCollectionSet = shopCollectionSet;
+	}
+
 	
 	
 }

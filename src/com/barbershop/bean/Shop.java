@@ -12,8 +12,8 @@ public class Shop {
     private String shopAddress;
     private String shopPhone;
     private String shopIntroduce;//店铺简介
-	//收藏表 用户和商店多对多
-	private Set<Users> UsersSet =new HashSet<Users>();
+	//收藏表 用户和商店 多对多 用两个一对多表示 单项不需要定义
+	//private Set<Collections> UsersSet =new HashSet<Collections>();
 	//商店与商店图片表单向一对多
 	private Set<ShopPicture> ShopPictureSet = new HashSet<ShopPicture>();
 	
@@ -69,14 +69,6 @@ public class Shop {
 
 	public void setShopIntroduce(String shopIntroduce) {
 		this.shopIntroduce = shopIntroduce;
-	}
-	@JsonProperty("UsersSet")
-	public Set<Users> getUsersSet() {
-		return UsersSet;
-	}
-
-	public void setUsersSet(Set<Users> usersSet) {
-		UsersSet = usersSet;
 	}
 	
 	@JsonProperty("ShopPictureSet")
