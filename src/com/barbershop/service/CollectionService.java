@@ -1,5 +1,7 @@
 package com.barbershop.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,5 +26,8 @@ public class CollectionService {
 	}
 	public Collections CheckIsCollected(Users user,Shop shop) {
 		return CDao.CheckIsCollected(user, shop);
+	}
+	public List<Collections> findListCollectionsByUser(Users user){
+		return CDao.findListCollectionsByUser(user);
 	}
 }

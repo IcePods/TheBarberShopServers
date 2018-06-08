@@ -1,5 +1,7 @@
 package com.barbershop.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -60,5 +62,17 @@ public class CollectionDao {
 				.uniqueResult();
 		return collections;
 		
+	}
+	/**
+	 * 通过用户查找用户收藏的店铺
+	 * @param user
+	 * @return
+	 */
+	public List<Collections> findListCollectionsByUser(Users user){
+		Session session = this.getSession();
+		Query<Collections> q = session.createQuery("from Collections where user=?");
+		q.setParameter(0, user);
+		List <Collections> list = q.list();
+		return list;		
 	}
 }

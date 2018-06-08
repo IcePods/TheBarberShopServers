@@ -70,14 +70,21 @@ public class CollectionAction {
 		}		
 		
 	}
-	
+	/**
+	 * 用户点击收藏店铺
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param UserToken
+	 * @return
+	 */
 	@RequestMapping(value = "/SaveOrDeleteCollection", method = RequestMethod.POST)
 	@ResponseBody
 	public Collections  SaveOrDeleteCollection(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestHeader(value="UserTokenSQL") String UserToken) {
 		System.out.println("用户点击收藏店铺");
 		//从session中获取Token
 		String sessionUserToken = (String) session.getAttribute("SessionUserToken");
-		System.out.println("sessionUserToken::CollectionAction:::35:::"+sessionUserToken);
+		System.out.println("sessionUserToken::CollectionAction:::80:"+sessionUserToken);
 		String account = request.getParameter("UserAccount");
 		String pwd = request.getParameter("UserPassword");
 		//获取店铺id 
@@ -93,12 +100,12 @@ public class CollectionAction {
 			//判断用户是否已经收藏用户
 			Collections collections  = cService.CheckIsCollected(user, shop);
 			if(collections!=null) {//如果不为空表示已经收藏 删除收藏
-				System.out.println("::::96行");
+				System.out.println("::::104行");
 				cService.deleteCollection(user, shop);
 				//删除返回收藏false 表示已经删除 改变图片有 深色改成浅色
 				return returnFalseCollections();
 			}else {//如果为空表示还未收藏 保存收藏
-				System.out.println("::::101行");
+				System.out.println("::::108行");
 				return cService.saveCollection(user, shop);
 			}
 				
@@ -109,6 +116,30 @@ public class CollectionAction {
 		}
 		
 	}
+	/**
+	 * 用户查找收藏店铺
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param UserToken
+	 * @return
+	 */
+	@RequestMapping(value = "/findCollectionByUser", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Collections>  findCollectionByUser(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestHeader(value="UserTokenSQL") String UserToken) {
+		System.out.println("用户查找收藏店铺");
+		//从session中获取Token
+		String sessionUserToken = (String) session.getAttribute("SessionUserToken");
+		System.out.println("sessionUserToken::CollectionAction:::126:::"+sessionUserToken);
+		String account = request.getParameter("UserAccount");
+		String pwd = request.getParameter("UserPassword");
+		 //判断token 获取用户 用户为 true时继续判断 否则返回一个 非法的collection；
+		Users user  = JudgeUserIsKeepLogin(account, pwd, sessionUserToken, UserToken, session);
+		List<Collections> list = cService.findListCollectionsByUser(user);
+		return list;
+		
+	}
+	
 	/**
 	 * 生成一个condition为false的collection对象
 	 * @return
