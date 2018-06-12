@@ -16,7 +16,7 @@ public class Activity {
 	private Date activityStartTime;//活动开始时间
 	private Date activityEndTime;//活动结束时间
 	//与店铺双向多对一
-//	@JsonIgnore
+	@JsonIgnore
 	private Shop shop;
 	
 	public Activity() {}
