@@ -12,19 +12,31 @@ import com.barbershop.dao.MerchantDao;
 public class MerchantService {
 	@Autowired
 	private MerchantDao merchantdao;
-	
-	//判断用户名是否已存在
+
+	// 判断用户名是否已存在
 	public boolean isEmpty(String account) {
 		Merchant merchant = merchantdao.queryMerchantByAccount(account);
-		if(merchant == null) {
+		if (merchant == null) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	//插入店铺
+
+	// 插入店铺
 	public boolean insert(Merchant merchant) {
-		 return merchantdao.insertMerchant(merchant);
+		return merchantdao.insertMerchant(merchant);
+	}
+
+	// --登录--
+	// 验证用户账户与密码是否匹配
+	public Merchant checkMerchantLogin(String account, String pwd) {
+		return merchantdao.checkMerchantLogin(account, pwd);
+	}
+
+	// 登录操作 添加token
+	public Merchant merchantLoginAddToken(Merchant merchant) {
+		return merchantdao.merchantLoginAddToken(merchant);
 	}
 
 }

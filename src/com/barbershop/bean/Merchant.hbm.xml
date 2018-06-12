@@ -9,7 +9,8 @@
 		</id>
 		<property name="merchantAccount" column="merchant_account" />
 		<property name="merchantPassword" column="merchant_password"/>
-		
+		<property name="openSuccessfully" column="opensuccessfully"></property>
+		<property name="merchantToken" column="merchant_token"></property>
 		<!-- Merchant和shop一对一映射  Merchant唯一外键映射 -->
 		<many-to-one name="shop" column="SHOP_ID" cascade="all" unique="true"/>
 		
