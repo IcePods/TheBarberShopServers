@@ -27,7 +27,7 @@ public class MerchantAction {
 	@Autowired
 	private MerchantService ms;
 	
-	//店铺登录  店铺输入
+	//店铺注册  店铺输入
 	@ResponseBody
 	@RequestMapping(value = "/merchantRegister",method = RequestMethod.POST)
 	public boolean register(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestBody String data) {
