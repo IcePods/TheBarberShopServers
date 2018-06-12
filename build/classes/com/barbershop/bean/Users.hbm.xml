@@ -18,7 +18,12 @@
 		<!-- 用户和店铺构成的收藏  多对多  用两个一对多表示 -->
 		 <set name="ShopCollectionSet" table="collections" cascade="save-update,persist" lazy="false"> 
             <key column="user_id"></key>
-            <one-to-many class="Collections"/>
+            <one-to-many class="Collections" />
+        </set>
+        <!-- 用户和动态  一对多  -->
+		 <set name="DynamicSet" table="Dynamic" cascade="save-update,persist" lazy="false"> 
+            <key column="user_id"></key>
+            <one-to-many class="Dynamic" />
         </set>
 		
 		

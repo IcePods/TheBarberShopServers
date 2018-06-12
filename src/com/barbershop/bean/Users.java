@@ -16,7 +16,7 @@ public class Users {
     private String UserToken;
     //不进行持久化  只用来判断 用户状态 ：用户名密码错误、注册错误、 等   默认为True 用户合法
     private Boolean UserCondition = true;
-    
+    private Set<Dynamic> DynamicSet  = new HashSet<Dynamic>();    
 	private Set<Collections> ShopCollectionSet = new HashSet<Collections>();
 	
 	@JsonProperty("UserId")
@@ -89,6 +89,12 @@ public class Users {
 	}
 	public void setShopCollectionSet(Set<Collections> shopCollectionSet) {
 		ShopCollectionSet = shopCollectionSet;
+	}
+	public Set<Dynamic> getDynamicSet() {
+		return DynamicSet;
+	}
+	public void setDynamicSet(Set<Dynamic> dynamicSet) {
+		DynamicSet = dynamicSet;
 	}
 
 	

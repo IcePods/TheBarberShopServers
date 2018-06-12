@@ -63,7 +63,7 @@ public class UsersAction {
 	 * @param data 图片列表的json串
 	 * @return 返回图片存储路径列表的json串
 	 * @throws IOException
-	 */
+	 *//*
 	@ResponseBody()
 	@RequestMapping(value = "/uploadPictureList", method = RequestMethod.POST)
 	public List<String> uploadPictureList( @RequestBody String data ) throws IOException {
@@ -84,7 +84,7 @@ public class UsersAction {
 			System.out.println(picPath.get(i));
 		}
 		return picPath;
-	}
+	}*/
 	
 	/**
 	 * 上传头像的请求处理方法，未完善，需要命名的格式

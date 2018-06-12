@@ -61,4 +61,17 @@ public class UserDao {
 		tran.commit();
 		return user;	
 	}
+	/**
+	 * 根据token返回用户
+	 * @param token
+	 * @return
+	 */
+	public Users findUserByToken(String token) {
+		Users user = (Users)this.getSession()
+				.createQuery("from Users where UserToken=?")
+				.setParameter(0, token)
+				.uniqueResult();
+		return user;
+		
+	}
 }
