@@ -26,6 +26,7 @@ import com.barbershop.service.UserService;
 import com.barbershop.utils.userPictureUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import sun.misc.BASE64Decoder;
 
@@ -39,17 +40,62 @@ public class UsersAction {
 	@RequestMapping(value = "/asc", method = RequestMethod.POST)
 	public void  insert( @RequestBody String data ) throws IOException {
 		System.out.println("测试数据");
+		
 		//初始化文件目录
 		userPicUtil = new userPictureUtil();
-		userPicUtil.initUserFileDirectory();
+		userPicUtil.initUserFileDirectory("userAccount");
 		//模拟多图上传
 		List<String> picList = new ArrayList<String>();
-		picList.add(data);
-		List<String> picPath = userPicUtil.receivePicture(picList);
+		Gson gson = new GsonBuilder()
+				.serializeNulls()
+				.setPrettyPrinting()
+				.create();
+		picList = gson.fromJson(data, new TypeToken<List<String>>() {}.getType());
+		List<String> picPath = userPicUtil.receiveDynamicPic(picList);
 		for(int i=0;i<picPath.size();i++) {
 			System.out.println(picPath.get(i));
 		}
 		
+	}
+	
+	/**
+	 * 上传多张图片
+	 * @param data 图片列表的json串
+	 * @return 返回图片存储路径列表的json串
+	 * @throws IOException
+	 */
+	@ResponseBody()
+	@RequestMapping(value = "/uploadPictureList", method = RequestMethod.POST)
+	public List<String> uploadPictureList( @RequestBody String data ) throws IOException {
+		System.out.println("上传多图");
+		
+		//初始化文件目录
+		userPicUtil = new userPictureUtil();
+		userPicUtil.initUserFileDirectory("userAccount");
+		//模拟多图上传
+		List<String> picList = new ArrayList<String>();
+		Gson gson = new GsonBuilder()
+				.serializeNulls()
+				.setPrettyPrinting()
+				.create();
+		picList = gson.fromJson(data, new TypeToken<List<String>>() {}.getType());
+		List<String> picPath = userPicUtil.receiveDynamicPic(picList);
+		for(int i=0;i<picPath.size();i++) {
+			System.out.println(picPath.get(i));
+		}
+		return picPath;
+	}
+	
+	/**
+	 * 上传头像的请求处理方法，未完善，需要命名的格式
+	 * @param data 上传的图片字符串
+	 */
+	@RequestMapping(value="/uploadHead", method = RequestMethod.POST)
+	public void uploadUserHeadPicture(@RequestBody String pic) {
+		System.out.println(":::::::::::::::::::");
+		//上传头像
+		String userHeadPath = userPicUtil.receiveHeadPicture(pic, "userName");
+		//将头像路径存到数据库，待续
 	}
 	
 	
@@ -223,7 +269,9 @@ public class UsersAction {
 			
 			//执行插入操作
 			us.insert(user);
-			
+			//初始化该用户的资源目录
+			userPicUtil.initUserFileDirectory(user.getUserAccount());
+
 			return user;
 		}else {
 			//当用户名已被注册 无法注册
