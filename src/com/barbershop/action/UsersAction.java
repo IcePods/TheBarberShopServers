@@ -28,74 +28,50 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import sun.misc.BASE64Decoder;
-
 @Controller
 public class UsersAction {
 	@Autowired
 	private  UserService us;
 	
-	private userPictureUtil userPicUtil;
+	private userPictureUtil userPicUtil = new userPictureUtil();
 	
-	@RequestMapping(value = "/asc", method = RequestMethod.POST)
-	public void  insert( @RequestBody String data ) throws IOException {
-		System.out.println("测试数据");
-		
-		//初始化文件目录
-		userPicUtil = new userPictureUtil();
-		userPicUtil.initUserFileDirectory("userAccount");
-		//模拟多图上传
-		List<String> picList = new ArrayList<String>();
-		Gson gson = new GsonBuilder()
-				.serializeNulls()
-				.setPrettyPrinting()
-				.create();
-		picList = gson.fromJson(data, new TypeToken<List<String>>() {}.getType());
-		List<String> picPath = userPicUtil.receiveDynamicPic(picList);
-		for(int i=0;i<picPath.size();i++) {
-			System.out.println(picPath.get(i));
-		}
-		
-	}
-	
-	/**
-	 * 上传多张图片
-	 * @param data 图片列表的json串
-	 * @return 返回图片存储路径列表的json串
-	 * @throws IOException
-	 *//*
-	@ResponseBody()
-	@RequestMapping(value = "/uploadPictureList", method = RequestMethod.POST)
-	public List<String> uploadPictureList( @RequestBody String data ) throws IOException {
-		System.out.println("上传多图");
-		
-		//初始化文件目录
-		userPicUtil = new userPictureUtil();
-		userPicUtil.initUserFileDirectory("userAccount");
-		//模拟多图上传
-		List<String> picList = new ArrayList<String>();
-		Gson gson = new GsonBuilder()
-				.serializeNulls()
-				.setPrettyPrinting()
-				.create();
-		picList = gson.fromJson(data, new TypeToken<List<String>>() {}.getType());
-		List<String> picPath = userPicUtil.receiveDynamicPic(picList);
-		for(int i=0;i<picPath.size();i++) {
-			System.out.println(picPath.get(i));
-		}
-		return picPath;
-	}*/
+//	@RequestMapping(value = "/asc", method = RequestMethod.POST)
+//	public void  insert( @RequestBody String data ) throws IOException {
+//		System.out.println("测试数据");
+//		
+//		//初始化文件目录
+//		userPicUtil = new userPictureUtil();
+//		userPicUtil.initUserFileDirectory("userAccount");
+//		//模拟多图上传
+//		List<String> picList = new ArrayList<String>();
+//		Gson gson = new GsonBuilder()
+//				.serializeNulls()
+//				.setPrettyPrinting()
+//				.create();
+//		picList = gson.fromJson(data, new TypeToken<List<String>>() {}.getType());
+//		List<String> picPath = userPicUtil.receiveDynamicPic(picList);
+//		for(int i=0;i<picPath.size();i++) {
+//			System.out.println(picPath.get(i));
+//		}
+//		
+//	}
 	
 	/**
 	 * 上传头像的请求处理方法，未完善，需要命名的格式
 	 * @param data 上传的图片字符串
 	 */
 	@RequestMapping(value="/uploadHead", method = RequestMethod.POST)
-	public void uploadUserHeadPicture(@RequestBody String pic) {
+	public void uploadUserHeadPicture(@RequestBody String pic, HttpSession session, @RequestHeader(value="UserTokenSQL") String UserToken) {
 		System.out.println(":::::::::::::::::::");
+		//从session中获取Token
+		
+		String sessionUserToken = (String) session.getAttribute("SessionUserToken");
+		Users user = findUserByToken(sessionUserToken,UserToken,session);
 		//上传头像
-		String userHeadPath = userPicUtil.receiveHeadPicture(pic, "userName");
-		//将头像路径存到数据库，待续
+		userPicUtil.initUserFileDirectory(user.getUserAccount());
+		String userHeadPath = userPicUtil.receiveHeadPicture(pic, user.getUserAccount());
+		user.setUserHeader(userHeadPath);
+		us.UpdateUseAttribute(user);
 	}
 	
 	
@@ -303,6 +279,47 @@ public class UsersAction {
         }
         return val;
     }
+    
+    /**
+	 * 根据token查询用户User
+	 * @param token
+	 * @return
+	 */
+	private Users findUserByToken(String sessionUserToken,String UserToken ,HttpSession session) {
+		
+		//如果session 中sessionUserToken 不为空 则判sessionUserToken是否等于客户端穿过来的Usertoken
+		if(sessionUserToken!=null) {
+			//则判sessionUserToken是否等于客户端穿过来的Usertoken
+			if(sessionUserToken.equals(UserToken)) { //相等
+				//从session中获取 之前登录是存的SessionUser
+				Users sessionUser = (Users) session.getAttribute("SessionUser");
+				//如果成功重新将User放入到session中
+				System.out.println("如果成功重新将User放入到session中");
+				session.setAttribute("SessionUser", sessionUser);
+				session.setAttribute("SessionUserToken", sessionUserToken);
+				return sessionUser;										
+			}else {//如果 token不相等用户登陆失效 可能该用户再其他设备上登录过
+				Users NoKeepUser = new Users();
+				NoKeepUser.setUserCondition(false);
+				return NoKeepUser;
+			}
+		}else {//如过为空则通过客户端的用户账号Account和密码pwd去数据库中查询
+			System.out.println("数据库中查User---Dynamic---114");
+			if(us==null) {
+				System.out.println("us 为空");
+			}
+			Users SQLUser2 = us.findUserByToken(UserToken);
+			System.out.println("数据库中的token："+SQLUser2.getUserToken());
+			System.out.println("前台传递的token："+UserToken);				
+			//如果成功重新将User放入到session中
+			session.setAttribute("SessionUser", SQLUser2);
+			session.setAttribute("SessionUserToken", SQLUser2.getUserToken());
+			//返回用户
+			System.out.println("返回用户：：：：工具类：：：：：123");
+			return SQLUser2;				
+		}
+		
+	}
     
 	
 }

@@ -9,6 +9,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import com.barbershop.bean.Users;
+import com.barbershop.service.UserService;
+
 import sun.misc.BASE64Decoder;
 
 public class userPictureUtil {
@@ -98,7 +106,7 @@ public class userPictureUtil {
 	 * 模拟接收上传的动态图片，保存到服务器图片资源目录
 	 * @param picList
 	 */
-	public List<String> receiveDynamicPic(List<String> picList) {
+	public List<String> receiveDynamicPic(List<String> picList, String userAccount) {
 		List<String> picPathList = new ArrayList<String>();
 		Date date = new Date();
 		int i = 1;
@@ -110,12 +118,12 @@ public class userPictureUtil {
 				DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmssSSS");	
 				String name = dateFormat.format(date).toString() + i;
 				i++;
-				FileOutputStream fos = new FileOutputStream( USER + DYNAMIC + "/" + name + ".png");
+				FileOutputStream fos = new FileOutputStream( USER + "/" + userAccount + DYNAMIC + "/" + name + ".png");
 				
 				fos.write(bs);
 				fos.flush();
 				fos.close();
-				String path = USER_PATH + DYNAMIC + "/" + name + ".png";
+				String path = USER_PATH + "/" + userAccount +  DYNAMIC + "/" + name + ".png";
 				picPathList.add(path);
 			} catch (IOException e) {
 				// TODO 自动生成的 catch 块
@@ -182,5 +190,6 @@ public class userPictureUtil {
 		
 		return path;
 	}
+
 	
 }

@@ -8,7 +8,7 @@
 			<generator class="increment"/>
 		</id>
 		<property name="DynamicContent"  column="dynamic_content"/>
-		<set name="DynamicImagePathSet"  cascade="delete" lazy="false">
+		<set name="DynamicImagePathSet" cascade="all" lazy="false">
     		<key column="dynamic_id"/>
     		<one-to-many class="DynamicPicture" />
 		</set>

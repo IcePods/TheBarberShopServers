@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Dynamic {
 	private int DynamicId;
-	@JsonIgnore
+//	@JsonIgnore
     private Users user;//用户
     private String DynamicContent;  // 动态文字
     private Set<DynamicPicture> DynamicImagePathSet= new HashSet<>(); //动态图片列表

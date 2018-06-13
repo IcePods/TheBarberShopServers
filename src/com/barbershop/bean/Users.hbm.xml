@@ -20,12 +20,12 @@
             <key column="user_id"></key>
             <one-to-many class="Collections" />
         </set>
-        <!-- 用户和动态  一对多  -->
-		 <set name="DynamicSet" table="Dynamic" cascade="save-update,persist" lazy="false"> 
+       <!-- 用户和动态  一对多  -->
+		 <!-- <set name="DynamicSet" table="Dynamic" cascade="save-update,persist" lazy="false"> 
             <key column="user_id"></key>
             <one-to-many class="Dynamic" />
         </set>
-		
+		 -->
 		
 	</class>
 </hibernate-mapping>

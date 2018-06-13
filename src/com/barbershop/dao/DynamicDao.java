@@ -39,6 +39,7 @@ public class DynamicDao {
 		Transaction tran = session.beginTransaction();
  
 		session.save(dynamic);
+		session.get(Dynamic.class,dynamic.getDynamicId());
 		tran.commit();
 		return dynamic;
 	}

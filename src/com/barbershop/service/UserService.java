@@ -45,6 +45,7 @@ public class UserService {
 	public Users UpdateUseAttribute(Users user) {
 		return userDao.UpdateUseAttribute(user);
 	}
+	
 	public Users findUserByToken(String token) {
 		return userDao.findUserByToken(token);
 	}

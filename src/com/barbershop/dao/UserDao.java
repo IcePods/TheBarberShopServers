@@ -67,10 +67,16 @@ public class UserDao {
 	 * @return
 	 */
 	public Users findUserByToken(String token) {
+		System.out.println("token"+ token);
 		Users user = (Users)this.getSession()
 				.createQuery("from Users where UserToken=?")
 				.setParameter(0, token)
 				.uniqueResult();
+		if(user==null) {
+			System.out.println("user 为空");
+		}else {
+			System.out.println("usre 不为空");
+		}
 		return user;
 		
 	}
