@@ -22,7 +22,7 @@ import com.barbershop.bean.Shop;
 import com.barbershop.bean.Users;
 import com.barbershop.service.DynamicService;
 import com.barbershop.service.UserService;
-import com.barbershop.utils.userPictureUtil;
+import com.barbershop.utils.UploadPictureUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -33,7 +33,7 @@ public class DynamicAction {
 	private DynamicService DService;
 	@Autowired
 	private  UserService us;
-	private userPictureUtil userPicUtil = new userPictureUtil();
+	private UploadPictureUtil uploadPicUtil = new UploadPictureUtil();
 	
 	@ResponseBody
 	@RequestMapping(value = "/showAllDynamic", method = RequestMethod.POST)
@@ -77,14 +77,12 @@ public class DynamicAction {
 	@ResponseBody
 	@RequestMapping(value = "/uploadPictureList", method = RequestMethod.POST)
 	public List<String> uploadPictureList( @RequestBody String data, HttpSession session, @RequestHeader(value="UserTokenSQL") String UserToken) throws IOException {
-		System.out.println("上传多图");
 		//从session中获取Token
 		String sessionUserToken = (String) session.getAttribute("SessionUserToken");
 		Users user = findUserByToken(sessionUserToken,UserToken,session);
 		
 		//初始化文件目录
-		userPicUtil = new userPictureUtil();
-		userPicUtil.initUserFileDirectory(user.getUserAccount());
+		uploadPicUtil.initUserFileDirectory(user.getUserAccount());
 		
 		//模拟多图上传
 		List<String> picList = new ArrayList<String>();
@@ -93,10 +91,7 @@ public class DynamicAction {
 				.setPrettyPrinting()
 				.create();
 		picList = gson.fromJson(data, new TypeToken<List<String>>() {}.getType());
-		List<String> picPath = userPicUtil.receiveDynamicPic(picList, user.getUserAccount());
-		for(int i=0;i<picPath.size();i++) {
-			System.out.println("李垚：：：" + picPath.get(i));
-		}
+		List<String> picPath = uploadPicUtil.receiveUserDynamicPic(picList, user.getUserAccount());
 		return picPath;
 	}
 	

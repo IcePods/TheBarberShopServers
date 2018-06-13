@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.barbershop.bean.Users;
 import com.barbershop.service.UserService;
-import com.barbershop.utils.userPictureUtil;
+import com.barbershop.utils.UploadPictureUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -33,7 +33,7 @@ public class UsersAction {
 	@Autowired
 	private  UserService us;
 	
-	private userPictureUtil userPicUtil = new userPictureUtil();
+	private UploadPictureUtil uploadPicUtil = new UploadPictureUtil();
 	
 //	@RequestMapping(value = "/asc", method = RequestMethod.POST)
 //	public void  insert( @RequestBody String data ) throws IOException {
@@ -62,14 +62,12 @@ public class UsersAction {
 	 */
 	@RequestMapping(value="/uploadHead", method = RequestMethod.POST)
 	public void uploadUserHeadPicture(@RequestBody String pic, HttpSession session, @RequestHeader(value="UserTokenSQL") String UserToken) {
-		System.out.println(":::::::::::::::::::");
 		//从session中获取Token
-		
 		String sessionUserToken = (String) session.getAttribute("SessionUserToken");
 		Users user = findUserByToken(sessionUserToken,UserToken,session);
 		//上传头像
-		userPicUtil.initUserFileDirectory(user.getUserAccount());
-		String userHeadPath = userPicUtil.receiveHeadPicture(pic, user.getUserAccount());
+		uploadPicUtil.initUserFileDirectory(user.getUserAccount());
+		String userHeadPath = uploadPicUtil.receiveUserHeadPic(pic, user.getUserAccount());
 		user.setUserHeader(userHeadPath);
 		us.UpdateUseAttribute(user);
 	}
@@ -246,7 +244,7 @@ public class UsersAction {
 			//执行插入操作
 			us.insert(user);
 			//初始化该用户的资源目录
-			userPicUtil.initUserFileDirectory(user.getUserAccount());
+			uploadPicUtil.initUserFileDirectory(user.getUserAccount());
 
 			return user;
 		}else {

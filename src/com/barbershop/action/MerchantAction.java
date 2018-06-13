@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.barbershop.bean.Merchant;
 import com.barbershop.bean.Users;
 import com.barbershop.service.MerchantService;
+import com.barbershop.utils.UploadPictureUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -26,6 +27,7 @@ import com.google.gson.GsonBuilder;
 public class MerchantAction {
 	@Autowired
 	private MerchantService ms;
+	
 	
 	//店铺注册  店铺输入
 	@ResponseBody
@@ -41,6 +43,8 @@ public class MerchantAction {
 		if(ms.isEmpty(merchant.getMerchantAccount())) {
 			//用户名未使用，执行插入操作
 			ms.insert(merchant);
+			//初始化用户资源目录
+			new UploadPictureUtil().initMerchantFileDirectory(merchant.getMerchantAccount());
 			return true;
 		}else {
 			//用户名已注册 无法注册
