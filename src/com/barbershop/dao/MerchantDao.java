@@ -1,12 +1,18 @@
 package com.barbershop.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.barbershop.bean.Activity;
+import com.barbershop.bean.Barber;
 import com.barbershop.bean.Merchant;
+import com.barbershop.bean.Shop;
 
 @Repository
 public class MerchantDao {
@@ -40,7 +46,7 @@ public class MerchantDao {
 		return flag;
 	}
 
-	// 验证用户账户和密码
+	// 通过用户账户和密码返回Merchant对象
 	public Merchant checkMerchantLogin(String account, String pwd) {
 		Merchant merchant = (Merchant) this.getSession()
 				.createQuery("from Merchant where merchantAccount = ? and merchantPassword = ?")
@@ -55,6 +61,19 @@ public class MerchantDao {
 		session.update(merchant);
 		tran.commit();
 		return merchant;
+	}
+	
+	//根据用户名和密码返回活动列表
+	public List<Activity> getActivityList(String account,String pwd){
+		Merchant merchant = (Merchant) this.getSession()
+				.createQuery("from Merchant where merchantAccount = ? and merchantPassword = ?")
+				.setParameter(0, account).setParameter(1, pwd).uniqueResult();
+		List<Activity> list = this.getSession()
+				.createSQLQuery( " select * from activity where shop_id = ? " )
+				.setParameter(0, merchant.getShop().getShopId())
+				.addEntity(Barber.class )
+				.list();
+		return list;
 	}
 
 }

@@ -19,5 +19,10 @@ public class BarberService {
 	public List<Barber> showBarberByShop(Shop shop) {
 		return barberDao.showBarberByShop(shop);
 	}
+
+	//通过用户名和密码获取店员列表
+	public List<Barber> getBarberListByMerchant(String account, String pwd){
+		return barberDao.getBarberListByMerchant(account,pwd);
+	}
 	
 }

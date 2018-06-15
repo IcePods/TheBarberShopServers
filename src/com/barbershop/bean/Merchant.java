@@ -7,7 +7,7 @@ public class Merchant {
 	private String merchantAccount;
 	private String merchantPassword;
 	private String merchantToken;
-	private char openSuccessfully;//是否开店成功  0为不成功 1为成功
+	private int openSuccess;//是否开店成功  0为不成功 1为成功
 	//不进行持久化  只用来判断 用户状态 ：用户名密码错误、注册错误、 等   默认为True 用户合法
     private Boolean merchantCondition = true;
     
@@ -56,16 +56,16 @@ public class Merchant {
 	public void setMerchantCondition(Boolean merchantCondition) {
 		this.merchantCondition = merchantCondition;
 	}
-	public char isOpenSuccessfully() {
-		return openSuccessfully;
+	public int getOpenSuccess() {
+		return openSuccess;
 	}
-	public void setOpenSuccessfully(char openSuccessfully) {
-		this.openSuccessfully = openSuccessfully;
+	public void setOpenSuccess(int openSuccess) {
+		this.openSuccess = openSuccess;
 	}
 	@Override
 	public String toString() {
 		return "Merchant [merchantId=" + merchantId + ", merchantAccount=" + merchantAccount + ", merchantPassword="
-				+ merchantPassword + ", merchantToken=" + merchantToken + ", openSuccessfully=" + openSuccessfully
+				+ merchantPassword + ", merchantToken=" + merchantToken + ", openSuccess=" + openSuccess
 				+ ", merchantCondition=" + merchantCondition + ", shop=" + shop + "]";
 	}
 	

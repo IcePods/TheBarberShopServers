@@ -48,4 +48,21 @@ public class BarberAction {
 		return list;
 		
 	}
+	
+	/**
+	 * 通过用户名密码获得店铺店员列表
+	 */
+	@ResponseBody
+	@RequestMapping(value="/getBarberByMerchant", method = RequestMethod.POST)
+	public List<Barber> getBarberListByMerchant(HttpServletRequest request,HttpServletResponse response,@RequestBody String merchantJson){
+		System.out.println("店员列表");
+		//通过键值对的方式获取用户名和密码
+		String account = request.getParameter("merchantAccount");
+		String pwd = request.getParameter("merchantPassword");
+		List<Barber> list = barberService.getBarberListByMerchant(account, pwd);
+		for(Barber b:list) {
+			System.out.println("名称" + b.getBarberName());
+		}
+		return list;
+	}
 }
