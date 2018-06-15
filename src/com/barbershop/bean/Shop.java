@@ -14,6 +14,9 @@ public class Shop {
     private String shopIntroduce;//店铺简介
 	//收藏表 用户和商店 多对多 用两个一对多表示 单项不需要定义
 	//private Set<Collections> UsersSet =new HashSet<Collections>();
+    //预约表  用户和商店 多对多 用两个一对多表示 单项不需要定义
+  	//private Set<Appointment> UsersSet =new HashSet<Appointment>();
+      //
 	//商店与商店图片表单向一对多
 	private Set<ShopPicture> ShopPictureSet = new HashSet<ShopPicture>();
 	

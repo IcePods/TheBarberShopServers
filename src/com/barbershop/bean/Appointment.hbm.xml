@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.barbershop.bean">
+	<class name="Appointment" table="appointment" lazy="false">
+	 	<id name="Appoint_id" column="appoint_id">
+			<generator class="increment"/>
+		</id>
+		<property name="Appoint_username"  column="appoint_username"/>
+		<property name="Appoint_phone"  column="appoint_phone"/>
+		<property name="Appoint_time"  column="appoint_time"/>
+		<property name="Appoint_barber"  column="appoint_barber"/>
+		<property name="Appoint_state"  column="appoint_state"/>
+		<!--订单与店铺单项多对一  -->
+		
+		<many-to-one name="Appoint_users" class="Users" column="user_id" lazy="false" cascade="save-update,persist" outer-join="false" ></many-to-one>
+		<many-to-one name="Appoint_userShopDetail" class="Shop" column="shop_id" lazy="false" cascade="save-update,persist" outer-join="false" ></many-to-one>
+		<!--订单和地址 一对一关联映射-->
+		<many-to-one name="Appoint_hairStyle" column="hairstyle_id" class="HairStyle" unique="true" outer-join="false" lazy="false"/>	
+	</class>
+</hibernate-mapping>

@@ -35,27 +35,6 @@ public class UsersAction {
 	
 	private UploadPictureUtil uploadPicUtil = new UploadPictureUtil();
 	
-//	@RequestMapping(value = "/asc", method = RequestMethod.POST)
-//	public void  insert( @RequestBody String data ) throws IOException {
-//		System.out.println("测试数据");
-//		
-//		//初始化文件目录
-//		userPicUtil = new userPictureUtil();
-//		userPicUtil.initUserFileDirectory("userAccount");
-//		//模拟多图上传
-//		List<String> picList = new ArrayList<String>();
-//		Gson gson = new GsonBuilder()
-//				.serializeNulls()
-//				.setPrettyPrinting()
-//				.create();
-//		picList = gson.fromJson(data, new TypeToken<List<String>>() {}.getType());
-//		List<String> picPath = userPicUtil.receiveDynamicPic(picList);
-//		for(int i=0;i<picPath.size();i++) {
-//			System.out.println(picPath.get(i));
-//		}
-//		
-//	}
-	
 	/**
 	 * 上传头像的请求处理方法，未完善，需要命名的格式
 	 * @param data 上传的图片字符串
@@ -134,9 +113,25 @@ public class UsersAction {
 		}
 	}
 	/**
+	 * 根据全台传递的用户名和密码  查找数据库中的正确的User;
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/FindTokenByAccountAndPwd", method = RequestMethod.POST)
+	@ResponseBody
+	public Users FindTokenByAccountAndPwd(HttpServletRequest request,HttpServletResponse response,HttpSession session) {
+		System.out.println("查找token");
+		String Account = request.getParameter("UserAccount");
+		String Pwd = request.getParameter("UserPassword");
+		Users user = us.checkLoginUser(Account, Pwd); 
+		return user;
+	}
+	/**
 	 * 维持登录状态
 	 */
-
+	
 	@RequestMapping(value = "/keepLogin", method = RequestMethod.POST)
 	@ResponseBody
 	public Users KeepLogin(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestHeader(value="UserTokenSQL") String UserToken) {
@@ -204,15 +199,32 @@ public class UsersAction {
 	 */
 	@RequestMapping(value = "/changeUserAttribute", method = RequestMethod.POST)
 	@ResponseBody
-	public Users ChangeUserAttributeeepLogin(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestHeader(value="UserTokenSQL") String UserToken,@RequestBody String userJson) {
-		System.out.println("更新用户属性信息"+userJson);
-		Gson gson = new GsonBuilder()
-				.serializeNulls()
-				.setPrettyPrinting()
-				.create();
-		Users user = gson.fromJson(userJson, Users.class);
-		us.UpdateUseAttribute(user);
-		return user;		
+	public Users ChangeUserAttributeeepLogin(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestHeader(value="UserTokenSQL") String UserToken) {
+		System.out.println("更新用户属性信息");
+		String userName = request.getParameter("userName");
+		String userSex= request.getParameter("userSex");
+		String userPhone = request.getParameter("userPhone");
+	
+		String sessionUserToken = (String) session.getAttribute("SessionUserToken");
+		//通过token查找用户
+		Users user = findUserByToken(sessionUserToken,UserToken,session);
+		
+		if(userName!=null) {
+			System.out.println("更新用户名");
+			user.setUserName(userName);
+			user = us.UpdateUseAttribute(user);
+			return user;
+		}else if(userSex!=null) {
+			System.out.println("更新用户性别");
+			user.setUserName(userSex);
+			user = us.UpdateUseAttribute(user);
+			return user;
+		}else {
+			System.out.println("更新用户电话");
+			user.setUserName(userPhone);
+			user = us.UpdateUseAttribute(user);
+			return user;
+		}		
 	}
 	
 	
