@@ -17,11 +17,11 @@
     		<key column="shop_id"/>
     		<one-to-many class="ShopPicture" />
 		</set>
-		<set name="HairStyleSet" cascade="delete" lazy="false">
+		<set name="HairStyleSet" cascade="all" lazy="false">
     		<key column="shop_id"/>
     		<one-to-many class="HairStyle" />
 		</set>
-		<set name="BarberSet" cascade="delete" lazy="false">
+		<set name="BarberSet" cascade="all" lazy="false">
     		<key column="shop_id"/>
     		<one-to-many class="Barber" />
 		</set>

@@ -24,5 +24,14 @@ public class BarberService {
 	public List<Barber> getBarberListByMerchant(String account, String pwd){
 		return barberDao.getBarberListByMerchant(account,pwd);
 	}
+
+	public boolean deleteBarberByID(int barberId) {
+		return barberDao.deleteBarberByID(barberId);
+	}
+
+	//添加店铺ID对应的理发师
+	public boolean addBarber(String account, String password, int merchantId) {
+		return barberDao.addBarber(account,password,merchantId);
+	}
 	
 }

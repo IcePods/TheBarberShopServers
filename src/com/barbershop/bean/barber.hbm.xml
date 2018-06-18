@@ -13,7 +13,7 @@
 		<property name="barberName" column="barber_name" />
 			
 		<!-- users 与 barber 一对一主键关联映射 -->
-		<one-to-one name="user" constrained="true" outer-join="false" ></one-to-one>
+		<one-to-one name="user" constrained="true" outer-join="false"  cascade="all"></one-to-one>
 		
 		<!-- barber 与  shop 多对一关联映射 -->
 	</class>
