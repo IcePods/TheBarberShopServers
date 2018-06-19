@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.barbershop.bean.Appointment;
+import com.barbershop.bean.Merchant;
+import com.barbershop.bean.Shop;
 import com.barbershop.bean.Users;
 import com.barbershop.dao.AppointmentDao;
 
@@ -32,4 +34,10 @@ public class AppointmentService {
   public Appointment updateAppointment(Appointment appointment) {
 	  return AppointDao.updateAppointment(appointment);
   }
+public List<Appointment> showAllMerchantAppointment(Shop shop, String state) {
+	return AppointDao.showAllShopAppointment(shop, state);
+}
+public List<Appointment> showNOUseMerchantAppointment(Shop shop, String state) {
+	return AppointDao.showNOUseShopAppointment(shop, state);
+}
 }

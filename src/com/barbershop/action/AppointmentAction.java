@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.barbershop.bean.Appointment;
 import com.barbershop.bean.Dynamic;
+import com.barbershop.bean.Merchant;
+import com.barbershop.bean.Shop;
 import com.barbershop.bean.Users;
 import com.barbershop.service.AppointmentService;
+import com.barbershop.service.MerchantService;
 import com.barbershop.service.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,6 +31,8 @@ public class AppointmentAction {
 	private AppointmentService AppointService;
 	@Autowired
 	private  UserService us;
+	@Autowired
+	private MerchantService ms;
 	
 	
 	@RequestMapping(value = "/saveAppointment", method = RequestMethod.POST)
@@ -154,5 +159,69 @@ public class AppointmentAction {
 			System.out.println("返回用户：：：：appointment：：：：：123");
 			return SQLUser2;				
 		}
+	}
+	/**
+	 * 根据token查询店铺Merchant
+	 * @param token
+	 * @return
+	 */
+	private Merchant findMerchantByToken(String sessionMerchantToken,String MerchantToken ,HttpSession session) {
+		
+		//如果session 中sessionMerchantToken 不为空 则判sessionMerchantToken是否等于客户端穿过来的Merchanttoken
+		if(sessionMerchantToken!=null) {
+			//则判sessionMerchantToken是否等于客户端穿过来的Merchanttoken
+			if(sessionMerchantToken.equals(MerchantToken)) { //相等
+				//从session中获取 之前登录是存的SessionMerchant
+				Merchant sessionMerchant = (Merchant) session.getAttribute("SessionMerchant");
+				//如果成功重新将Merchant放入到session中
+				System.out.println("如果成功重新将Merchant放入到session中");
+				session.setAttribute("SessionMerchant", sessionMerchant);
+				session.setAttribute("SessionMerchantToken", sessionMerchantToken);
+				return sessionMerchant;										
+			}else {//如果 token不相等用户登陆失效 可能该用户再其他设备上登录过
+				Merchant NoKeepMerchant = new Merchant();
+				NoKeepMerchant.setMerchantCondition(false);
+				return NoKeepMerchant;
+			}
+		}else {//如过为空则通过客户端的用户账号Account和密码pwd去数据库中查询
+			System.out.println("数据库中查Merchant---appointment---146");
+			Merchant SQLMerchant2 = ms.findMerchantByToken(MerchantToken);
+			System.out.println("数据库中的token："+SQLMerchant2.getMerchantToken());
+			System.out.println("前台传递的token："+MerchantToken);				
+			//如果成功重新将Merchant放入到session中
+			session.setAttribute("SessionMerchant", SQLMerchant2);
+			session.setAttribute("SessionMerchantToken", SQLMerchant2.getMerchantToken());
+			//返回用户
+			System.out.println("返回店铺：：：：appointment：：：：：123");
+			return SQLMerchant2;				
+		}
+	}
+	/**
+	 * 商家获取预约列表
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param MerchantToken
+	 * @return
+	 */
+	@RequestMapping(value = "/getAppointmentByMerchant", method = RequestMethod.POST)
+	@ResponseBody
+	private List<Appointment> showAllShopAppointment(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestHeader(value="MerchantTokenSQL") String MerchantToken) {
+		System.out.println("根据店铺展示预约信息");
+		//获取订单状态信息
+		String state = request.getParameter("Appointment_state");
+		System.out.println("获取订单状态信息::展示预约信息:::"+state);
+		String sessionMerchantToken = (String) session.getAttribute("SessionMerchantToken");
+		Merchant merchant = findMerchantByToken(sessionMerchantToken,MerchantToken,session);
+		Shop shop = merchant.getShop();
+		if(state.equals("进行中")) {
+			List<Appointment> list = AppointService.showAllMerchantAppointment(shop,state);
+			return list;
+		}else{
+			List<Appointment> list = AppointService.showNOUseMerchantAppointment(shop, "进行中");
+			return list;
+		}
+		
+		
 	}
 }

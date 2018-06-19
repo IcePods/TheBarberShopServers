@@ -13,7 +13,7 @@
 		<property name="shopIntroduce" column="shop_introduce"/>
 		<property name="shopPicture" column="shop_picture"/>
 		
-		<set name="ShopPictureSet"  lazy="false">
+		<set name="ShopPictureSet" cascade="delete" lazy="false">
     		<key column="shop_id"/>
     		<one-to-many class="ShopPicture" />
 		</set>
@@ -24,6 +24,10 @@
 		<set name="BarberSet" cascade="all" lazy="false">
     		<key column="shop_id"/>
     		<one-to-many class="Barber" />
+		</set>
+		<set name="ActivitySet" cascade="delete" lazy="false">
+    		<key column="shop_id"/>
+    		<one-to-many class="Activity" />
 		</set>
 		
 	

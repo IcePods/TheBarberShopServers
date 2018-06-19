@@ -62,6 +62,24 @@ public class MerchantDao {
 		tran.commit();
 		return merchant;
 	}
+
+	/**
+	 * 根据Token返回店铺
+	 * @return
+	 */
+	public Merchant findMerchantByToken(String token) {
+		System.out.println("token"+ token);
+		Merchant merchant = (Merchant)this.getSession()
+				.createQuery("from Merchant where merchantToken=?")
+				.setParameter(0, token)
+				.uniqueResult();
+		if(merchant==null) {
+			System.out.println("merchant 为空");
+		}else {
+			System.out.println("merchant 不为空");
+		}
+		return merchant;
+	}
 	
 	//根据用户名和密码返回活动列表
 	public List<Activity> getActivityList(String account,String pwd){

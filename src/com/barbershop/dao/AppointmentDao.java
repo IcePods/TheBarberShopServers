@@ -83,4 +83,31 @@ public class AppointmentDao {
 		tran.commit();
 		return appointment;
 	}
+	/**
+	 * 查看店铺全部订单
+	 * @param user
+	 * @return
+	 */
+	public List<Appointment> showAllShopAppointment(Shop shop,String state){
+		Session session = this.getSession();
+		Query<Appointment> q = session.createQuery("from Appointment where Appoint_userShopDetail =? and Appoint_state = ? order by Appoint_id desc");
+		q.setParameter(0, shop);
+		q.setParameter(1, state);
+		List <Appointment> list = q.list();
+		return list;		
+	}
+	/**
+	 * 展示店铺已完成订单
+	 * @param user
+	 * @param state
+	 * @return
+	 */
+	public List<Appointment> showNOUseShopAppointment(Shop shop,String state){
+		Session session = this.getSession();
+		Query<Appointment> q = session.createQuery("from Appointment where Appoint_userShopDetail =? and Appoint_state != ? order by Appoint_id desc");
+		q.setParameter(0, shop);
+		q.setParameter(1, state);
+		List <Appointment> list = q.list();
+		return list;		
+	}
 }
