@@ -71,7 +71,7 @@ public class MerchantDao {
 		List<Activity> list = this.getSession()
 				.createSQLQuery( " select * from activity where shop_id = ? " )
 				.setParameter(0, merchant.getShop().getShopId())
-				.addEntity(Barber.class )
+				.addEntity(Activity.class )
 				.list();
 		return list;
 	}

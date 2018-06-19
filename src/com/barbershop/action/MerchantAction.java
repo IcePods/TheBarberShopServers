@@ -115,9 +115,9 @@ public class MerchantAction {
 	 * 通过用户名密码获得店铺活动列表
 	 */
 	@ResponseBody
-	@RequestMapping(value="/merchantGetMerchantBarber", method = RequestMethod.POST)
+	@RequestMapping(value="/merchantGetMerchantActivity", method = RequestMethod.POST)
 	public List<Activity> getActivityList(HttpServletRequest request,HttpServletResponse response,@RequestBody String merchantJson){
-		System.out.println("店员列表");
+		System.out.println("活动列表");
 		//通过键值对的方式获取用户名和密码
 		String account = request.getParameter("merchantAccount");
 		String pwd = request.getParameter("merchantPassword");

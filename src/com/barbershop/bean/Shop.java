@@ -25,6 +25,9 @@ public class Shop {
 	
 	//店铺与 理发师 一对多 单项映射
 	private Set<Barber> BarberSet = new HashSet<Barber>();
+	
+	//店铺与 活动 一对多 
+	private Set<Activity> ActivitySet = new HashSet<Activity>();
 	@JsonProperty("shopId")
 	public int getShopId() {
 		return shopId;
@@ -99,6 +102,15 @@ public class Shop {
 	public void setBarberSet(Set<Barber> barberSet) {
 		BarberSet = barberSet;
 	}
+
+	public Set<Activity> getActivitySet() {
+		return ActivitySet;
+	}
+
+	public void setActivitySet(Set<Activity> activitySet) {
+		ActivitySet = activitySet;
+	}
+	
 	
 	
 }
