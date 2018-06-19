@@ -22,5 +22,8 @@ public class ShopService {
 	public Shop getShopByShopId(int shopid) {
 		return shopdao.getShopByShopId(shopid);
 	}
+	public List<Shop> SelectShopFuzzyMatching(String ShopName){
+		return shopdao.SelectShopFuzzyMatching(ShopName);
+	}
 
 }

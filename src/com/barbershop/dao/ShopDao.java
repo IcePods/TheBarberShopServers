@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -32,6 +33,20 @@ public class ShopDao {
 		//Transaction tran = session.beginTransaction();
 		Shop shop = session.get(Shop.class, shopid);
 		return shop;
+	}
+	/**
+	 * 模糊匹配
+	 * @param ShopName
+	 * @return
+	 */
+	public List<Shop> SelectShopFuzzyMatching(String ShopName){
+		Session session = this.getSession();
+		String hql= "from Shop where shopName like '%"+ShopName+"%'";
+		Query<Shop> query = session.createQuery(hql);
+		//query.setString("shopname", "%"+ShopName+"%");
+		System.out.println(hql);
+		List<Shop> list = query.list();
+		return list;
 	}
 	
 

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +27,8 @@ public class HairStyleAction {
 	private HairStyleService hsService;
 	@Autowired
 	private ShopService shopservice;
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////客户端操作////////////////////////////////////////////////
 	//首页根据类型展示发型信息
 	@ResponseBody
 	@RequestMapping(value = "/getHairStyleByTypeInHome", method = RequestMethod.POST)
@@ -54,5 +57,15 @@ public class HairStyleAction {
 		
 		List<HairStyle> list = hsService.getHairStyleByShop(shop,hairStyleType);
 		return list;
+	}
+	////////////////////////////////////////////////////////////////////////////////
+	////////////////////////商家端操作/////////////////////////////////////////////////
+	@ResponseBody
+	@RequestMapping(value = "/SaveNewHairStyleByShopInShop", method = RequestMethod.POST)
+	public List<HairStyle> SaveNewHairStyleByShopInShop(@RequestHeader(value="MerchantToken") String MerchantToken ,@RequestBody String HairStyleJson,HttpServletRequest request,HttpServletResponse response, HttpSession session){
+		
+		
+		return null;
+		
 	}
 }

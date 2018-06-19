@@ -210,18 +210,19 @@ public class UsersAction {
 		Users user = findUserByToken(sessionUserToken,UserToken,session);
 		
 		if(userName!=null) {
-			System.out.println("更新用户名");
+			System.out.println("更新用户名"+userName);
 			user.setUserName(userName);
 			user = us.UpdateUseAttribute(user);
 			return user;
 		}else if(userSex!=null) {
-			System.out.println("更新用户性别");
-			user.setUserName(userSex);
+			System.out.println("更新用户性别"+userSex);
+			
+			user.setUserSex(userSex);
 			user = us.UpdateUseAttribute(user);
 			return user;
 		}else {
-			System.out.println("更新用户电话");
-			user.setUserName(userPhone);
+			System.out.println("更新用户电话"+userPhone);
+			user.setUserPhone(userPhone);
 			user = us.UpdateUseAttribute(user);
 			return user;
 		}		
