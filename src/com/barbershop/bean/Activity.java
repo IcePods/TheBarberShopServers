@@ -13,15 +13,17 @@ public class Activity {
 	private int activityId;
 	private String activityName;
 	private String activityContent;//活动内容
-	private Date activityStartTime;//活动开始时间
-	private Date activityEndTime;//活动结束时间
+	private String activityStartTime;//活动开始时间
+	private String activityEndTime;//活动结束时间
 	//与店铺双向多对一
 	@JsonIgnore
 	private Shop shop;
 	
 	public Activity() {}
-	public Activity(int activityId, String activityName, String activityContent, Date activityStartTime,
-			Date activityEndTime, Shop shop) {
+	
+	public Activity(int activityId, String activityName, String activityContent, String activityStartTime,
+			String activityEndTime, Shop shop) {
+		super();
 		this.activityId = activityId;
 		this.activityName = activityName;
 		this.activityContent = activityContent;
@@ -29,6 +31,7 @@ public class Activity {
 		this.activityEndTime = activityEndTime;
 		this.shop = shop;
 	}
+
 	public int getActivityId() {
 		return activityId;
 	}
@@ -47,18 +50,23 @@ public class Activity {
 	public void setActivityContent(String activityContent) {
 		this.activityContent = activityContent;
 	}
-	public Date getActivityStartTime() {
+	
+	public String getActivityStartTime() {
 		return activityStartTime;
 	}
-	public void setActivityStartTime(Date activityStartTime) {
+
+	public void setActivityStartTime(String activityStartTime) {
 		this.activityStartTime = activityStartTime;
 	}
-	public Date getActivityEndTime() {
+
+	public String getActivityEndTime() {
 		return activityEndTime;
 	}
-	public void setActivityEndTime(Date activityEndTime) {
+
+	public void setActivityEndTime(String activityEndTime) {
 		this.activityEndTime = activityEndTime;
 	}
+
 	public Shop getShop() {
 		return shop;
 	}
