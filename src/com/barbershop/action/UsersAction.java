@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.barbershop.bean.Users;
 import com.barbershop.service.UserService;
+import com.barbershop.utils.JPushUtil;
+import com.barbershop.utils.PushExample;
 import com.barbershop.utils.UploadPictureUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -102,6 +104,7 @@ public class UsersAction {
 				System.out.println("102:"+mUser.getUserAccount()+":"+mUser.getUserToken());
 				String sessionUserToken = (String) session.getAttribute("SessionUserToken");
 				System.out.println("sessionUserToken::105::::"+sessionUserToken);
+				PushExample.testSendPush();
 				return mUser;
 			}else {
 				System.out.println("104附近");
