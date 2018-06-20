@@ -21,7 +21,9 @@ import com.barbershop.bean.Shop;
 import com.barbershop.bean.Users;
 import com.barbershop.service.AppointmentService;
 import com.barbershop.service.MerchantService;
+import com.barbershop.service.ShopService;
 import com.barbershop.service.UserService;
+import com.barbershop.utils.PushExample;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -33,6 +35,8 @@ public class AppointmentAction {
 	private  UserService us;
 	@Autowired
 	private MerchantService ms;
+	@Autowired
+	private ShopService ss;
 	
 	
 	@RequestMapping(value = "/saveAppointment", method = RequestMethod.POST)
@@ -59,6 +63,9 @@ public class AppointmentAction {
 			appoint.setAppoint_users(user);
 			appoint.setAppoint_state("进行中");
 			Appointment app = AppointService.saveAppointment(appoint);
+			Merchant merchant = ss.findMerchantByShop(app.getAppoint_userShopDetail());
+			String merchanttoken = merchant.getMerchantToken();
+			PushExample.SendForMerchantPush(merchanttoken, "您有新的预约！");
 			return app;
 		}else {
 			System.out.println("token 登录失效错误 返回一个非法 Appointment");

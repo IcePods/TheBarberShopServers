@@ -29,7 +29,7 @@ public class AppointmentDao {
 	 */
 	public Appointment saveAppointment(Appointment app) {
 		Session session = this.getSession();
-		session.save(app);		
+		session.merge(app);		
 		return app;		
 	}
 	/**

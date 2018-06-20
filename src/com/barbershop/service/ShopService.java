@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.barbershop.bean.Merchant;
 import com.barbershop.bean.Shop;
 import com.barbershop.dao.ShopDao;
 
@@ -24,6 +25,9 @@ public class ShopService {
 	}
 	public List<Shop> SelectShopFuzzyMatching(String ShopName){
 		return shopdao.SelectShopFuzzyMatching(ShopName);
+	}
+	public Merchant findMerchantByShop(Shop shop) {
+		return shopdao.findMerchantByShop(shop);
 	}
 
 }

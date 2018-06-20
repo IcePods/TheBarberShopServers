@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.barbershop.bean.Merchant;
 import com.barbershop.bean.Shop;
 
 @Repository
@@ -33,6 +34,17 @@ public class ShopDao {
 		//Transaction tran = session.beginTransaction();
 		Shop shop = session.get(Shop.class, shopid);
 		return shop;
+	}
+	/**根据shop获取merchant
+	 * 
+	 * @param shop
+	 * @return
+	 */
+	public Merchant findMerchantByShop(Shop shop) {
+		Merchant merchant = (Merchant) this.getSession()
+				.createQuery("from Merchant where shop=?")
+				.setParameter(0, shop).uniqueResult();
+		return merchant;
 	}
 	/**
 	 * 模糊匹配
