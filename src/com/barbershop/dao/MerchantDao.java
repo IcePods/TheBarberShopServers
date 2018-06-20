@@ -93,5 +93,16 @@ public class MerchantDao {
 				.list();
 		return list;
 	}
+	
+	/**
+	 * 通过token获取店铺对象
+	 * @param token
+	 * @return
+	 */
+	public Merchant getMerchantByToken(String token) {
+		return (Merchant) this.getSession().createQuery("from Merchant where merchantToken = ?")
+				.setParameter(0, token)
+				.uniqueResult();
+	}
 
 }

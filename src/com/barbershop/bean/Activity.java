@@ -18,19 +18,6 @@ public class Activity {
 	//与店铺双向多对一
 	@JsonIgnore
 	private Shop shop;
-	
-	public Activity() {}
-	
-	public Activity(int activityId, String activityName, String activityContent, String activityStartTime,
-			String activityEndTime, Shop shop) {
-		super();
-		this.activityId = activityId;
-		this.activityName = activityName;
-		this.activityContent = activityContent;
-		this.activityStartTime = activityStartTime;
-		this.activityEndTime = activityEndTime;
-		this.shop = shop;
-	}
 
 	public int getActivityId() {
 		return activityId;

@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.barbershop.bean.HairStyle;
 import com.barbershop.bean.Shop;
@@ -35,5 +37,18 @@ public class HairStyleDao {
 		query.setParameter(1, type);
 		List<HairStyle> list = query.list();
 		return list;
+	}
+	
+	
+	//保存新发型的方法
+	public void addNewHairStyle(HairStyle hs) {
+		this.getSession().save(hs);
+	}
+	//保存店铺作品 更新店铺
+	public void updateShopByHairstyle(Shop shop) {
+		Session session = this.getSession();
+		//Transaction tran = session.beginTransaction();
+		session.update(shop);
+		//tran.commit();
 	}
 }

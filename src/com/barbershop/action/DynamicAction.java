@@ -35,15 +35,28 @@ public class DynamicAction {
 	private  UserService us;
 	private UploadPictureUtil uploadPicUtil = new UploadPictureUtil();
 	
+	/**
+	 * 显示所有动态消息
+	 * @return 动态列表
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/showAllDynamic", method = RequestMethod.POST)
-	public List<Dynamic> showAllDynamic (){
+	public List<Dynamic> getAllDynamic (){
 		System.out.println("动态请求");
 		List<Dynamic> DynamicList = DService.showAllDynamic();
 		System.out.println("动态请求成功！");
 		return DynamicList;
 	}
 	
+	/**
+	 * 发布新动态
+	 * @param request 
+	 * @param response
+	 * @param session
+	 * @param UserToken 用户token
+	 * @param DynamicJson 动态对象的json串
+	 * @return 成功返回该动态对象，失败返回空动态对象
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/createDynamic", method = RequestMethod.POST)
 	public Dynamic SaveDynamic(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestHeader(value="UserTokenSQL") String UserToken,@RequestBody String DynamicJson) {
@@ -66,6 +79,23 @@ public class DynamicAction {
 			return returnFalseDynamic();
 		}
 			
+	}
+	
+	/**
+	 * 返回用户发布的动态
+	 * @param UserToken
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="getUserDynamic", method=RequestMethod.POST)
+	public List<Dynamic> getUserDynamic(HttpSession session, @RequestHeader(value="UserTokenSQL") String UserToken){
+		List<Dynamic> list = new ArrayList<>();
+		System.out.println("添加动态");
+		//从session中获取Token
+		String sessionUserToken = (String) session.getAttribute("SessionUserToken");
+		Users user = findUserByToken(sessionUserToken,UserToken,session);
+		list = DService.getDynamicByUser(user);
+		return list;
 	}
 	
 	/**

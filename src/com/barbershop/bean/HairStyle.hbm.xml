@@ -15,7 +15,7 @@
     		<key column="hairstyle_id"/>
     		<one-to-many class="HairStyleDetail" />
 		</set>
-		<many-to-one name="shop" column="shop_id" class="Shop" lazy="false"/>
+		<many-to-one name="shop" column="shop_id" class="Shop" lazy="false" cascade="all"/>
 	</class>
 
 </hibernate-mapping>

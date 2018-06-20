@@ -25,4 +25,16 @@ public class HairStyleService {
 	public List<HairStyle> getHairStyleByShop(Shop shop,String type){
 		return hsDao.getHairStyleByShop(shop,type);
 	}
+	
+	/**
+	 * 上传新发型
+	 * @param hs
+	 * @return
+	 */
+	public void createNewHairSytle(HairStyle hs) {
+		hsDao.addNewHairStyle(hs);
+	}
+	public void updateShopByHairstyle(Shop shop) {
+		hsDao.updateShopByHairstyle(shop);
+	}
 }

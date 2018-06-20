@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.barbershop.bean.Dynamic;
+import com.barbershop.bean.Users;
 
 @Repository
 public class DynamicDao {
@@ -25,8 +26,9 @@ public class DynamicDao {
 	 */
 	public List<Dynamic> showAllDynamic (){
 		Session session = this.getSession();
-		Query<Dynamic> query = session.createQuery("from Dynamic order by DynamicId desc");
-		List<Dynamic> list = query.list();		
+		@SuppressWarnings("unchecked")
+		List<Dynamic> list= session.createQuery("from Dynamic order by DynamicId desc")
+								.list();	
 		return list;		
 	}
 	/**
@@ -42,5 +44,17 @@ public class DynamicDao {
 		session.get(Dynamic.class,dynamic.getDynamicId());
 		tran.commit();
 		return dynamic;
+	}
+	
+	/**
+	 * 通过用户获取用户动态数据
+	 * @param user
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Dynamic> getDynamicByUser(Users user) {
+		return this.getSession().createQuery("from Dynamic where user = ? order by DynamicId desc")
+			.setParameter(0, user)
+			.list();
 	}
 } 

@@ -50,5 +50,14 @@ public class MerchantService {
 	public List<Activity> getActivityList(String account, String pwd){
 		return merchantdao.getActivityList(account,pwd);
 	}
+	
+	/**
+	 * 通过token获取merchant对象
+	 * @param token
+	 * @return
+	 */
+	public Merchant getMerchantByToken(String token) {
+		return merchantdao.getMerchantByToken(token);
+	}
 
 }
