@@ -102,11 +102,12 @@ public class Shop {
 	public void setBarberSet(Set<Barber> barberSet) {
 		BarberSet = barberSet;
 	}
-
+	
+	@JsonProperty("ActivitySet")
 	public Set<Activity> getActivitySet() {
 		return ActivitySet;
 	}
-
+	
 	public void setActivitySet(Set<Activity> activitySet) {
 		ActivitySet = activitySet;
 	}

@@ -51,4 +51,21 @@ public class HairStyleDao {
 		session.update(shop);
 		//tran.commit();
 	}
+	
+	//得到店铺作品
+	@SuppressWarnings("unchecked")
+	public List<HairStyle> getHairStyleByShop(Shop shop){
+		return this.getSession().createQuery("from HairStyle where shop = ? order by hairstyleId desc")
+				.setParameter(0, shop)
+				.list();
+	}
+	
+	//删除发型
+	public void deleteHairStyle(HairStyle hairStyle) {
+		this.getSession().delete(hairStyle);
+	}
+	//根据发型ID获取发型对象
+	public HairStyle getHairStyleByID(int id) {
+		return this.getSession().get(HairStyle.class, id);
+	}
 }

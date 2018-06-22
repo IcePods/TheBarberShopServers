@@ -37,4 +37,16 @@ public class HairStyleService {
 	public void updateShopByHairstyle(Shop shop) {
 		hsDao.updateShopByHairstyle(shop);
 	}
+	
+	//得到店铺作品
+	public List<HairStyle> getHairStyleByShop(Shop shop){
+		return hsDao.getHairStyleByShop(shop);
+	}
+	
+	public void deleteHairStyle(HairStyle hairStyle) {
+		hsDao.deleteHairStyle(hairStyle);
+	}
+	public HairStyle getHairStyleByID(int id) {
+		return hsDao.getHairStyleByID(id);
+	}
 }

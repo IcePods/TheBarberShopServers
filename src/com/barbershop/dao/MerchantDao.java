@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.barbershop.bean.Activity;
 import com.barbershop.bean.Barber;
+import com.barbershop.bean.HairStyle;
 import com.barbershop.bean.Merchant;
 import com.barbershop.bean.Shop;
 

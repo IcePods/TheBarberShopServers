@@ -15,7 +15,7 @@ public class HairStyle {
     @JsonIgnore
 	private Shop shop;
 	//发型和 发现详情图片 单项一 对多影视//发型图片集合
-	private Set<HairStyleDetail> HairStyleDetailSet = new HashSet<>();
+	private Set<HairStyleDetail> hairStyleDetailSet = new HashSet<>();
 	public int getHairstyleId() {
 		return hairstyleId;
 	}
@@ -47,10 +47,10 @@ public class HairStyle {
 		this.shop = shop;
 	}
 	public Set<HairStyleDetail> getHairStyleDetailSet() {
-		return HairStyleDetailSet;
+		return hairStyleDetailSet;
 	}
 	public void setHairStyleDetailSet(Set<HairStyleDetail> hairStyleDetailSet) {
-		HairStyleDetailSet = hairStyleDetailSet;
+		this.hairStyleDetailSet = hairStyleDetailSet;
 	}
 	public String getHairstyleType() {
 		return hairstyleType;

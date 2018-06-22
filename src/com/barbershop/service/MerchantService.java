@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.barbershop.bean.Activity;
+import com.barbershop.bean.HairStyle;
 import com.barbershop.bean.Merchant;
+import com.barbershop.bean.Shop;
 import com.barbershop.dao.MerchantDao;
 
 @Service

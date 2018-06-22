@@ -123,4 +123,41 @@ public class HairStyleAction {
 		hsService.updateShopByHairstyle(shop);
 		
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/getShopHairStyle", method=RequestMethod.POST)
+	public List<HairStyle> getShopHairStyle(@RequestBody String data,@RequestHeader(value="MerchantToken") String merchantToken){
+		System.out.println("请求到达token"+merchantToken);
+		System.out.println(data);
+		List<HairStyle> list = new ArrayList<>();
+		Merchant merchant = merchantService.getMerchantByToken(merchantToken);
+		Shop shop = merchant.getShop();
+		list = hsService.getHairStyleByShop(shop);
+		return list;
+	}
+	
+	/**
+	 * 删除发型
+	 * @param data HairStyle对象的json数据
+	 * @param merchantToken
+	 */
+	@RequestMapping(value="/deleteHairStyle", method=RequestMethod.POST)
+	public void deleteHairStyle(@RequestBody String data) {
+		System.out.println("删除发型");
+		Gson gson = new GsonBuilder()
+				.serializeNulls()
+				.setPrettyPrinting()
+				.create();
+		
+		HairStyle hairStyle = gson.fromJson(data, HairStyle.class);
+		
+		//删除发型关联的图片
+		util.deleteMerchantPic(hairStyle.getHairstylePicture());
+		System.out.println(hairStyle.getHairStyleDetailSet().size());
+		util.deleteMerchantPic(hairStyle.getHairStyleDetailSet());
+		//删除发型
+		hsService.deleteHairStyle(hairStyle);
+		
+	}
 }
