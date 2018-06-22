@@ -4,7 +4,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.barbershop.bean">
 	<class name="Activity" table="activity">
-		<id name="activityId" column="activity_id" type="java.lang.Integer">
+		<id name="activityId" column="activity_id">
 			<generator class="increment"/>
 		</id>
 		<property name="activityName"  column="activity_name" type="java.lang.String"/>
