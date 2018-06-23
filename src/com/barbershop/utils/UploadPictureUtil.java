@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.barbershop.bean.HairStyleDetail;
+import com.barbershop.bean.Users;
 
 import sun.misc.BASE64Decoder;
 
@@ -141,17 +142,26 @@ public class UploadPictureUtil {
 	 * @param picName 用户名（来给用户头像命名，具有唯一性）
 	 * @return 返回用户头像所在的虚拟地址
 	 */
-	public String receiveUserHeadPic(String pic, String userAccount) {
+	public String receiveUserHeadPic(String pic, Users user) {
 		String path = new String();
+		String str = user.getUserHeader().replaceAll(USER_PATH,"");
+		String realPath = USER + str;
+		File file = new File(realPath);
+		Date date = new Date();
+		if(file.exists() && file.isFile()) {
+			file.delete();
+		}
 		byte[] bs;
 		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmssSSS");	
+			String name = dateFormat.format(date).toString();
 			bs = new BASE64Decoder().decodeBuffer(pic);
-			FileOutputStream fos = new FileOutputStream(USER + "/" + userAccount + HEAD + "/" + userAccount + ".png");
+			FileOutputStream fos = new FileOutputStream(USER + "/" + user.getUserAccount() + HEAD + "/" + name + ".png");
 
 			fos.write(bs);
 			fos.flush();
 			fos.close();
-			path = USER_PATH + "/" + userAccount + HEAD + "/" + userAccount + ".png";
+			path = USER_PATH + "/" + user.getUserAccount() + HEAD + "/" + name + ".png";
 		} catch (IOException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
@@ -320,13 +330,13 @@ public class UploadPictureUtil {
 		//得到真实路径
 		String path = picPath.replaceAll(USER_PATH, "");
 		String realPath = USER + path;
-		
+
 		File file = new File(realPath);
 		if(file.exists() && file.isFile()) {
 			file.delete();
 		}
 	}
-	
+
 	/**
 	 * 删除用户端图片
 	 * @param picPathList 图片的虚拟路径集合
@@ -336,15 +346,15 @@ public class UploadPictureUtil {
 			//得到真实路径
 			String path = picPath.replaceAll(USER_PATH, "");
 			String realPath = USER + path;
-			
+
 			File file = new File(realPath);
 			if(file.exists() && file.isFile()) {
 				file.delete();
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * 删除店铺端图片
 	 * @param picPath 图片的虚拟路径
@@ -354,13 +364,13 @@ public class UploadPictureUtil {
 		System.out.println("删除图片" + picPath);
 		String path = picPath.replaceAll(MERCHANT_PATH, "");
 		String realPath = MERCHANT + path;
-		
+
 		File file = new File(realPath);
 		if(file.exists() && file.isFile()) {
 			file.delete();
 		}
 	}
-	
+
 	/**
 	 * 删除店铺端图片
 	 * @param picPathList 图片的虚拟路径集合
@@ -371,13 +381,13 @@ public class UploadPictureUtil {
 			String path = detail.getHairstyle_detail_picture().replaceAll(MERCHANT_PATH, "");
 			System.out.println("删除图片" + detail.getHairstyle_detail_picture());
 			String realPath = MERCHANT + path;
-			
+
 			File file = new File(realPath);
 			if(file.exists() && file.isFile()) {
 				file.delete();
 			}
 		}
-		
+
 	}
 
 }

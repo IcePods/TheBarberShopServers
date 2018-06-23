@@ -40,16 +40,20 @@ public class UsersAction {
 	 * 上传头像的请求处理方法，未完善，需要命名的格式
 	 * @param data 上传的图片字符串
 	 */
+	@ResponseBody
 	@RequestMapping(value="/uploadHead", method = RequestMethod.POST)
-	public void uploadUserHeadPicture(@RequestBody String pic, HttpSession session, @RequestHeader(value="UserTokenSQL") String UserToken) {
+	public String uploadUserHeadPicture(@RequestBody String pic, HttpSession session, @RequestHeader(value="UserTokenSQL") String UserToken) {
 		//从session中获取Token
 		String sessionUserToken = (String) session.getAttribute("SessionUserToken");
 		Users user = findUserByToken(sessionUserToken,UserToken,session);
 		//上传头像
 		uploadPicUtil.initUserFileDirectory(user.getUserAccount());
-		String userHeadPath = uploadPicUtil.receiveUserHeadPic(pic, user.getUserAccount());
+		String userHeadPath = uploadPicUtil.receiveUserHeadPic(pic, user);
 		user.setUserHeader(userHeadPath);
 		us.UpdateUseAttribute(user);
+		System.out.println("李垚"+userHeadPath);
+		
+		return userHeadPath;	
 	}
 	
 	
@@ -78,7 +82,7 @@ public class UsersAction {
 		//如果用和户名为空 无法登陆
 		if(us.isEmpty(account)) {
 			//无法登陆 返回一个UserCondition 状态 为False的对象
-			System.out.println("80附近");
+			System.out.println("用户名不存在 返回不合法用户：：：：：：：81附近");
 			Users FalseUser = new Users();
 			FalseUser.setUserCondition(false);
 			return FalseUser;
@@ -86,7 +90,7 @@ public class UsersAction {
 			//验证用户账号与密码是否匹配			
 			Users mUser = (Users)us.checkLoginUser(account, pwd);
 			if(mUser!=null) {
-				System.out.println("88附近");
+				System.out.println("用户登陆用户账号与密码是否匹配：：：88附近");
 				//获取当前时间 与用户账号密码创建时间 构成Token
 				//获取当前创建时间 
 				Date date = new Date();
@@ -100,13 +104,13 @@ public class UsersAction {
 				//登录成功后将token 放入session 方便用户保持登录
 				session.setAttribute("SessionUserToken", Token);
 				session.setAttribute("SessionUser", mUser);
-				System.out.println("102:"+mUser.getUserAccount()+":"+mUser.getUserToken());
+				System.out.println("session中的User::::::::::"+mUser.getUserAccount()+":"+mUser.getUserToken());
 				String sessionUserToken = (String) session.getAttribute("SessionUserToken");
 				System.out.println("sessionUserToken::105::::"+sessionUserToken);
-				PushExample.SendForUserPush();
+				//PushExample.SendForUserPush();
 				return mUser;
 			}else {
-				System.out.println("104附近");
+				System.out.println("用户登陆不合::::::法 109附近");
 				//如果验证的用户名和密码 为则更改用户合法状态 
 				mUser = new Users();
 				mUser.setUserCondition(false);
@@ -252,7 +256,8 @@ public class UsersAction {
 		//生成随机用户名
 		String username= "吾理头用户"+getCharAndNumr(6);
 		user.setUserName(username);
-		
+		//默认头像
+		user.setUserHeader("resource/user/head/barberHead.jpg");
 		//用户名可用 可以注册用户
 		if(us.isEmpty(user.getUserAccount())) {
 			
@@ -333,6 +338,25 @@ public class UsersAction {
 		}
 		
 	}
-    
+	/**
+	 * 根据用户account 查找用户昵称
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/queryUserName", method = RequestMethod.POST)
+	@ResponseBody
+	public Users  QueryUserNameByUserAccount(HttpServletRequest request,HttpServletResponse response,HttpSession session) {
+		System.out.println("根据用户account 查找用户昵称");
+		String UserAccount = request.getParameter("BarberAccount");
+		System.out.println("BarberAccount:"+UserAccount);
+		String UserName =us.findUserNameByUserAccount(UserAccount);
+		System.out.println(UserName);
+		Users user = new Users();
+		user.setUserName(UserName);
+		return user;	
+	}
+	
 	
 }

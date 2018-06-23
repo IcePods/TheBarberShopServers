@@ -65,7 +65,7 @@ public class AppointmentAction {
 			Appointment app = AppointService.saveAppointment(appoint);
 			Merchant merchant = ss.findMerchantByShop(app.getAppoint_userShopDetail());
 			String merchanttoken = merchant.getMerchantToken();
-			PushExample.SendForMerchantPush(merchanttoken, "您有新的预约！");
+			PushExample.SendForMerchantPush(merchanttoken, "您有新的预约");
 			return app;
 		}else {
 			System.out.println("token 登录失效错误 返回一个非法 Appointment");

@@ -49,4 +49,8 @@ public class UserService {
 	public Users findUserByToken(String token) {
 		return userDao.findUserByToken(token);
 	}
+	
+	public String findUserNameByUserAccount(String UserAccount) {
+		return userDao.findUserNameByUserAccount(UserAccount);
+	}
 }

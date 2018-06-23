@@ -11,6 +11,7 @@ public class Dynamic {
 //	@JsonIgnore
     private Users user;//用户
     private String DynamicContent;  // 动态文字
+    private String DynamicTime;//动态发布时间
     private Set<DynamicPicture> DynamicImagePathSet= new HashSet<>(); //动态图片列表
     private boolean DynamicCondition = true;
     @JsonProperty("DynamicId")
@@ -46,6 +47,13 @@ public class Dynamic {
 	}
 	public void setDynamicCondition(boolean dynamicCondition) {
 		DynamicCondition = dynamicCondition;
+	}
+	@JsonProperty("DynamicTime")
+	public String getDynamicTime() {
+		return DynamicTime;
+	}
+	public void setDynamicTime(String dynamicTime) {
+		DynamicTime = dynamicTime;
 	}
 	
     

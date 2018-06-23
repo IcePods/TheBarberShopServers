@@ -1,7 +1,10 @@
 package com.barbershop.action;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,7 +73,12 @@ public class DynamicAction {
 		Dynamic dynamic = gson.fromJson(DynamicJson, Dynamic.class);
 		Users user = findUserByToken(sessionUserToken,UserToken,session);
 		if(user.getUserCondition()) {
+			//获取发布动态时间
+			Date date = new Date();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日HH:mm");		
+			String DynamicGreateTime = dateFormat.format(date).toString();
 			dynamic.setUser(user);
+			dynamic.setDynamicTime(DynamicGreateTime);
 			dynamic = DService.SaveDynamic(dynamic);
 			System.out.println("返回一个正确的的状态的Dynamic");
 			return dynamic;

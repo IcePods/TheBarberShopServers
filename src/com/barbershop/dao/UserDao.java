@@ -4,6 +4,7 @@ package com.barbershop.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -79,5 +80,16 @@ public class UserDao {
 		}
 		return user;
 		
+	}
+	/**
+	 * 根据用户Account 查询用户昵称
+	 * @param UserAccount
+	 * @return
+	 */
+	public String findUserNameByUserAccount(String UserAccount) {
+		return (String)this.getSession()
+				.createQuery("select UserName from Users where UserAccount = ?")
+				.setParameter(0, UserAccount)
+				.uniqueResult();
 	}
 }
