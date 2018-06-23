@@ -246,12 +246,12 @@ public class UploadPictureUtil {
 		byte[] bs;
 		try {
 			bs = new BASE64Decoder().decodeBuffer(pic);
-			FileOutputStream fos = new FileOutputStream(MERCHANT + "/" + merchantAccount + HEAD + "/" + merchantAccount + ".png");
+			FileOutputStream fos = new FileOutputStream(MERCHANT + "/" + merchantAccount + SHOP_IMAGE + "/" + merchantAccount + ".png");
 
 			fos.write(bs);
 			fos.flush();
 			fos.close();
-			path = MERCHANT_PATH + "/" + merchantAccount + HEAD + "/" + merchantAccount + ".png";
+			path = MERCHANT_PATH + "/" + merchantAccount + SHOP_IMAGE + "/" + merchantAccount + ".png";
 		} catch (IOException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
@@ -338,24 +338,6 @@ public class UploadPictureUtil {
 	}
 
 	/**
-	 * 删除用户端图片
-	 * @param picPathList 图片的虚拟路径集合
-	 */
-	public void deleteUserPic(List<String> picPathList) {
-		for(String picPath: picPathList) {
-			//得到真实路径
-			String path = picPath.replaceAll(USER_PATH, "");
-			String realPath = USER + path;
-
-			File file = new File(realPath);
-			if(file.exists() && file.isFile()) {
-				file.delete();
-			}
-		}
-
-	}
-
-	/**
 	 * 删除店铺端图片
 	 * @param picPath 图片的虚拟路径
 	 */
@@ -370,24 +352,4 @@ public class UploadPictureUtil {
 			file.delete();
 		}
 	}
-
-	/**
-	 * 删除店铺端图片
-	 * @param picPathList 图片的虚拟路径集合
-	 */
-	public void deleteMerchantPic(Set<HairStyleDetail> detailSet) {
-		for(HairStyleDetail detail: detailSet) {
-			//得到真实路径
-			String path = detail.getHairstyle_detail_picture().replaceAll(MERCHANT_PATH, "");
-			System.out.println("删除图片" + detail.getHairstyle_detail_picture());
-			String realPath = MERCHANT + path;
-
-			File file = new File(realPath);
-			if(file.exists() && file.isFile()) {
-				file.delete();
-			}
-		}
-
-	}
-
 }

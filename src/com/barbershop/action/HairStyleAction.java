@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.barbershop.bean.HairStyle;
+import com.barbershop.bean.HairStyleDetail;
 import com.barbershop.bean.Merchant;
 import com.barbershop.bean.Shop;
 import com.barbershop.service.HairStyleService;
@@ -155,7 +156,10 @@ public class HairStyleAction {
 		//删除发型关联的图片
 		util.deleteMerchantPic(hairStyle.getHairstylePicture());
 		System.out.println(hairStyle.getHairStyleDetailSet().size());
-		util.deleteMerchantPic(hairStyle.getHairStyleDetailSet());
+		for(HairStyleDetail hsd: hairStyle.getHairStyleDetailSet()) {
+			util.deleteMerchantPic(hsd.getHairstyle_detail_picture());
+		}
+		
 		//删除发型
 		hsService.deleteHairStyle(hairStyle);
 		

@@ -54,12 +54,27 @@ public class ShopDao {
 	public List<Shop> SelectShopFuzzyMatching(String ShopName){
 		Session session = this.getSession();
 		String hql= "from Shop where shopName like '%"+ShopName+"%'";
+		@SuppressWarnings("unchecked")
 		Query<Shop> query = session.createQuery(hql);
-		//query.setString("shopname", "%"+ShopName+"%");
 		System.out.println(hql);
 		List<Shop> list = query.list();
 		return list;
 	}
 	
+	/**
+	 * 保存shop对象
+	 * @param shop
+	 */
+	public void saveShop(Shop shop) {
+		this.getSession().save(shop);
+	}
+	
+	/**
+	 * 更新shop信息
+	 * @param shop
+	 */
+	public void updateShop(Shop shop) {
+		this.getSession().update(shop);
+	}
 
 }

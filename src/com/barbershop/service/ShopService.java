@@ -29,5 +29,12 @@ public class ShopService {
 	public Merchant findMerchantByShop(Shop shop) {
 		return shopdao.findMerchantByShop(shop);
 	}
+	public void saveShop(Shop shop) {
+		shopdao.saveShop(shop);
+	}
+	public void updateShop(Shop shop) {
+		shopdao.updateShop(shop);
+	}
+	
 
 }
