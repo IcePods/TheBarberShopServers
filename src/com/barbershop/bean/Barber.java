@@ -1,7 +1,5 @@
 package com.barbershop.bean;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Barber {
 	private int barberId;
 	private String barberImg;

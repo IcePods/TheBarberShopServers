@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.barbershop.bean.Collections;
 import com.barbershop.bean.Dynamic;
-import com.barbershop.bean.Shop;
 import com.barbershop.bean.Users;
 import com.barbershop.service.DynamicService;
 import com.barbershop.service.UserService;

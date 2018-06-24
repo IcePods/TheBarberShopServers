@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -41,12 +39,10 @@ public class CollectionDao {
 	 * @param id
 	 */
 	public void deleteCollection(Users user,Shop shop) {
-		Session session = this.getSession();
-		Query q = session.createQuery("delete from Collections where user=? and shop=? ");
-		q.setParameter(0, user);
-		q.setParameter(1, shop);
-        q.executeUpdate();
-		
+		this.getSession().createQuery("delete from Collections where user=? and shop=? ")
+			.setParameter(0, user)
+			.setParameter(1, shop)
+			.executeUpdate();
 	}
 	/**
 	 * 判断该店铺是否被该用户搜藏
@@ -68,11 +64,10 @@ public class CollectionDao {
 	 * @param user
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Collections> findListCollectionsByUser(Users user){
-		Session session = this.getSession();
-		Query<Collections> q = session.createQuery("from Collections where user=?");
-		q.setParameter(0, user);
-		List <Collections> list = q.list();
-		return list;		
+		return this.getSession().createQuery("from Collections where user=?")
+				.setParameter(0, user)
+				.list();	
 	}
 }

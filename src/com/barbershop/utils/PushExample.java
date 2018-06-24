@@ -1,19 +1,6 @@
 package com.barbershop.utils;
 
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
-
-import cn.jiguang.common.ServiceHelper;
-import cn.jiguang.common.connection.NativeHttpClient;
-import cn.jiguang.common.connection.NettyHttpClient;
-import cn.jiguang.common.resp.ResponseWrapper;
-import cn.jpush.api.push.CIDResult;
-import cn.jpush.api.push.GroupPushClient;
 import cn.jpush.api.push.model.notification.*;
-import com.google.gson.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,13 +9,9 @@ import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
 import cn.jpush.api.JPushClient;
 import cn.jpush.api.push.PushResult;
-import cn.jpush.api.push.model.Message;
-import cn.jpush.api.push.model.Options;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
-import cn.jpush.api.push.model.SMS;
 import cn.jpush.api.push.model.audience.Audience;
-import cn.jpush.api.push.model.audience.AudienceTarget;
 public class PushExample {
 	protected static final Logger LOG = LoggerFactory.getLogger(PushExample.class);
 
@@ -46,7 +29,7 @@ public class PushExample {
     public static final String REGISTRATION_ID = "0900e8d85ef";
     public static final String TAG = "tag_api";
     public static long sendCount = 0;
-    private static long sendTotalTime = 0;
+    //private static long sendTotalTime = 0;
 
     //给客户端发送消息
 	public static void SendForUserPush() {

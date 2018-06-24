@@ -5,12 +5,10 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.barbershop.bean.Appointment;
-import com.barbershop.bean.Collections;
 import com.barbershop.bean.Shop;
 import com.barbershop.bean.Users;
 
@@ -38,11 +36,12 @@ public class AppointmentDao {
 	 * @return
 	 */
 	public List<Appointment> showAllAppointment(Users user,String state){
-		Session session = this.getSession();
-		Query<Appointment> q = session.createQuery("from Appointment where Appoint_users =? and Appoint_state = ? order by Appoint_id desc");
-		q.setParameter(0, user);
-		q.setParameter(1, state);
-		List <Appointment> list = q.list();
+		@SuppressWarnings("unchecked")
+		List <Appointment> list = this.getSession()
+				.createQuery("from Appointment where Appoint_users =? and Appoint_state = ? order by Appoint_id desc")
+				.setParameter(0, user)
+				.setParameter(1, state)
+				.list();
 		return list;		
 	}
 	/**
@@ -52,11 +51,12 @@ public class AppointmentDao {
 	 * @return
 	 */
 	public List<Appointment> showNOUseAppointment(Users user,String state){
-		Session session = this.getSession();
-		Query<Appointment> q = session.createQuery("from Appointment where Appoint_users =? and Appoint_state != ? order by Appoint_id desc");
-		q.setParameter(0, user);
-		q.setParameter(1, state);
-		List <Appointment> list = q.list();
+		@SuppressWarnings("unchecked")
+		List <Appointment> list = this.getSession()
+				.createQuery("from Appointment where Appoint_users =? and Appoint_state != ? order by Appoint_id desc")
+				.setParameter(0, user)
+				.setParameter(1, state)
+				.list();
 		return list;		
 	}
 	
@@ -89,11 +89,12 @@ public class AppointmentDao {
 	 * @return
 	 */
 	public List<Appointment> showAllShopAppointment(Shop shop,String state){
-		Session session = this.getSession();
-		Query<Appointment> q = session.createQuery("from Appointment where Appoint_userShopDetail =? and Appoint_state = ? order by Appoint_id desc");
-		q.setParameter(0, shop);
-		q.setParameter(1, state);
-		List <Appointment> list = q.list();
+		@SuppressWarnings("unchecked")
+		List <Appointment> list = this.getSession()
+				.createQuery("from Appointment where Appoint_userShopDetail =? and Appoint_state = ? order by Appoint_id desc")
+				.setParameter(0, shop)
+				.setParameter(1, state)
+				.list();
 		return list;		
 	}
 	/**
@@ -103,11 +104,12 @@ public class AppointmentDao {
 	 * @return
 	 */
 	public List<Appointment> showNOUseShopAppointment(Shop shop,String state){
-		Session session = this.getSession();
-		Query<Appointment> q = session.createQuery("from Appointment where Appoint_userShopDetail =? and Appoint_state != ? order by Appoint_id desc");
-		q.setParameter(0, shop);
-		q.setParameter(1, state);
-		List <Appointment> list = q.list();
+		@SuppressWarnings("unchecked")
+		List <Appointment> list = this.getSession()
+				.createQuery("from Appointment where Appoint_userShopDetail =? and Appoint_state != ? order by Appoint_id desc")
+				.setParameter(0, shop)
+				.setParameter(1, state)
+				.list();
 		return list;		
 	}
 }

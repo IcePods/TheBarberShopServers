@@ -8,21 +8,17 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.barbershop.bean.Barber;
 import com.barbershop.bean.Collections;
 import com.barbershop.bean.Shop;
 import com.barbershop.bean.Users;
 import com.barbershop.service.CollectionService;
 import com.barbershop.service.ShopService;
 import com.barbershop.service.UserService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 @Controller
 public class CollectionAction {

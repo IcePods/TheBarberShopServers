@@ -1,12 +1,8 @@
 package com.barbershop.action;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.barbershop.bean.Users;
 import com.barbershop.service.UserService;
-import com.barbershop.utils.PushExample;
 import com.barbershop.utils.UploadPictureUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 @Controller
 public class UsersAction {
