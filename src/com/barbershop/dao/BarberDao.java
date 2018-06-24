@@ -25,14 +25,13 @@ public class BarberDao {
 	 * @param shop
 	 * @return
 	 */
-	public List<Barber> showBarberByShop(Shop shop) {
-		@SuppressWarnings("unchecked")
+	public List<Barber> getBarberListByMerchant(int id ){
 		List<Barber> list = this.getSession()
-				.createQuery("from Barber where shop = ?")
-				.setParameter(0, shop)
-				.list();		
+				.createSQLQuery( " select * from barber where shop_id = ? " )
+				.setParameter(0, id)
+				.addEntity(Barber.class )
+				.list();
 		return list;
-		
 	}
 
 	//根据ID删除理发师

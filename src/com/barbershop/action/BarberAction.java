@@ -68,11 +68,9 @@ public class BarberAction {
 	@RequestMapping(value="/getBarberByMerchant", method = RequestMethod.POST)
 	public List<Barber> getBarberListByMerchant(@RequestBody String merchantJson, @RequestHeader(value="MerchantToken") String token){
 		Merchant merchant = merchantService.getMerchantByToken(token);
-		Set<Barber> barberSet = merchant.getShop().getBarberSet();
-		List<Barber> list = new ArrayList<>();
-		for(Barber b: barberSet) {
-			list.add(b);
-		}
+		List<Barber> list = barberService.getBarberListByMerchant(merchant.getShop().getShopId());
+		
+		System.out.println("理发师个数"+list.size());
 		return list;
 	}
 	/**

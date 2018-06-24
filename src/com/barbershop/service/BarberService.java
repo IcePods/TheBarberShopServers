@@ -16,8 +16,8 @@ public class BarberService {
 	@Autowired
 	private BarberDao barberDao;
 	
-	public List<Barber> showBarberByShop(Shop shop) {
-		return barberDao.showBarberByShop(shop);
+	public List<Barber> getBarberListByMerchant(int id ){
+		return barberDao.getBarberListByMerchant(id);
 	}
 
 	public boolean deleteBarberByID(int barberId) {
