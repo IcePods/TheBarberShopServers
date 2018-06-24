@@ -46,7 +46,7 @@ public class BarberAction {
 	 * @param session
 	 * @param ShopJson
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value = "/showBarberByShop", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Barber> showBarberByShop(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestBody String ShopJson) {
@@ -59,7 +59,7 @@ public class BarberAction {
 		List<Barber> list = barberService.showBarberByShop(shop);
 		return list;
 		
-	}
+	}*/
 	
 	/**
 	 * 通过用户名密码获得店铺店员列表

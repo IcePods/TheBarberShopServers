@@ -50,7 +50,7 @@ public class UserService {
 		return userDao.findUserByToken(token);
 	}
 	
-	public String findUserNameByUserAccount(String UserAccount) {
-		return userDao.findUserNameByUserAccount(UserAccount);
+	public String findUserNameByUserAccountss(String UserAccount) {
+		return userDao.findUserNameByUserAccountss(UserAccount);
 	}
 }

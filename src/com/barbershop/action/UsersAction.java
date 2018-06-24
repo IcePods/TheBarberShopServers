@@ -46,7 +46,6 @@ public class UsersAction {
 		//从session中获取Token
 		String sessionUserToken = (String) session.getAttribute("SessionUserToken");
 		Users user = findUserByToken(sessionUserToken,UserToken,session);
-		//上传头像
 		uploadPicUtil.initUserFileDirectory(user.getUserAccount());
 		String userHeadPath = uploadPicUtil.receiveUserHeadPic(pic, user);
 		user.setUserHeader(userHeadPath);
@@ -351,7 +350,7 @@ public class UsersAction {
 		System.out.println("根据用户account 查找用户昵称");
 		String UserAccount = request.getParameter("BarberAccount");
 		System.out.println("BarberAccount:"+UserAccount);
-		String UserName =us.findUserNameByUserAccount(UserAccount);
+		String UserName =us.findUserNameByUserAccountss(UserAccount);
 		System.out.println(UserName);
 		Users user = new Users();
 		user.setUserName(UserName);
