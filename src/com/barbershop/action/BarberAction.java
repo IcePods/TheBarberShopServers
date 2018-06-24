@@ -1,6 +1,8 @@
 package com.barbershop.action;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,18 +58,17 @@ public class BarberAction {
 	}
 	
 	/**
-	 * 通过用户名密码获得店铺店员列表
+	 * 获得店铺店员列表
 	 */
 	@ResponseBody
 	@RequestMapping(value="/getBarberByMerchant", method = RequestMethod.POST)
-	public List<Barber> getBarberListByMerchant(HttpServletRequest request,HttpServletResponse response,@RequestBody String merchantJson){
+	public List<Barber> getBarberListByMerchant(@RequestBody String merchantJson, @RequestHeader(value="MerchantToken") String token){
 		System.out.println("店员列表");
-		//通过键值对的方式获取用户名和密码
-		String account = request.getParameter("merchantAccount");
-		String pwd = request.getParameter("merchantPassword");
-		List<Barber> list = barberService.getBarberListByMerchant(account, pwd);
-		for(Barber b:list) {
-			System.out.println("名称" + b.getBarberName());
+		Merchant merchant = merchantService.getMerchantByToken(token);
+		Set<Barber> barberSet = merchant.getShop().getBarberSet();
+		List<Barber> list = new ArrayList<>();
+		for(Barber b: barberSet) {
+			list.add(b);
 		}
 		return list;
 	}

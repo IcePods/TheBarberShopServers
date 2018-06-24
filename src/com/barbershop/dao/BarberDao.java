@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -28,34 +26,22 @@ public class BarberDao {
 	 * @return
 	 */
 	public List<Barber> showBarberByShop(Shop shop) {
-		Session session = this.getSession();
-		Query<Barber> query = session.createQuery("from Barber where shop = ?");
-		query.setParameter(0, shop);
-		List<Barber> list = query.list();		
+		@SuppressWarnings("unchecked")
+		List<Barber> list = this.getSession()
+				.createQuery("from Barber where shop = ?")
+				.setParameter(0, shop)
+				.list();		
 		return list;
 		
 	}
 
-	//根据用户名和密码返回店员列表
-	public List<Barber> getBarberListByMerchant(String account,String pwd){
-		Merchant merchant = (Merchant) this.getSession()
-				.createQuery("from Merchant where merchantAccount = ? and merchantPassword = ?")
-				.setParameter(0, account).setParameter(1, pwd).uniqueResult();
-		List<Barber> list = this.getSession()
-				.createSQLQuery( " select * from barber where shop_id = ? " )
-				.setParameter(0, merchant.getShop().getShopId())
-				.addEntity(Barber.class )
-				.list();
-		return list;
-	}
 	//根据ID删除理发师
 	public boolean deleteBarberByID(int barberId) {
-		Session session = this.getSession();
-		Query q = session.createQuery("delete from Barber where barberId=? ");
-		q.setParameter(0, barberId);
 		boolean flag = false;
 		try {
-			q.executeUpdate();
+			this.getSession().createQuery("delete from Barber where barberId=? ")
+			.setParameter(0, barberId)
+			.executeUpdate();
 			flag = true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
