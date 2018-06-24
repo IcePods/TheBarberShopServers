@@ -20,6 +20,11 @@ public class BarberService {
 		return barberDao.showBarberByShop(shop);
 	}
 
+	//通过用户名和密码获取店员列表
+	public List<Barber> getBarberListByMerchant(String account, String pwd){
+		return barberDao.getBarberListByMerchant(account,pwd);
+	}
+
 	public boolean deleteBarberByID(int barberId) {
 		return barberDao.deleteBarberByID(barberId);
 	}

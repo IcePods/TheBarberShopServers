@@ -8,7 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import com.barbershop.bean.HairStyleDetail;
 import com.barbershop.bean.Users;
 
 import sun.misc.BASE64Decoder;
