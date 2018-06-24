@@ -20,11 +20,6 @@ public class BarberService {
 		return barberDao.showBarberByShop(shop);
 	}
 
-	//通过用户名和密码获取店员列表
-	public List<Barber> getBarberListByMerchant(String account, String pwd){
-		return barberDao.getBarberListByMerchant(account,pwd);
-	}
-
 	public boolean deleteBarberByID(int barberId) {
 		return barberDao.deleteBarberByID(barberId);
 	}
@@ -32,6 +27,10 @@ public class BarberService {
 	//添加店铺ID对应的理发师
 	public boolean addBarber(String account, String password, int merchantId) {
 		return barberDao.addBarber(account,password,merchantId);
+	}
+	//判断用户是否已经在其他店铺存在
+	public Boolean JudgeUserAlreadyExistsInBarber(int id) {
+		return barberDao.JudgeUserAlreadyExistsInBarber(id);
 	}
 	
 }

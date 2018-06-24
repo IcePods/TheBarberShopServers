@@ -1,6 +1,8 @@
 package com.barbershop.action;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.barbershop.bean.Barber;
+import com.barbershop.bean.Collections;
 import com.barbershop.bean.Merchant;
 import com.barbershop.bean.Shop;
+import com.barbershop.bean.Users;
 import com.barbershop.service.BarberService;
+import com.barbershop.service.CollectionService;
 import com.barbershop.service.MerchantService;
 import com.barbershop.service.UserService;
 import com.google.gson.Gson;
@@ -31,7 +36,8 @@ public class BarberAction {
 	private MerchantService merchantService;
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private CollectionService collectionService;
 	
 	/**
 	 * 通过店铺查看理发师
@@ -60,14 +66,12 @@ public class BarberAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/getBarberByMerchant", method = RequestMethod.POST)
-	public List<Barber> getBarberListByMerchant(HttpServletRequest request,HttpServletResponse response,@RequestBody String merchantJson){
-		System.out.println("店员列表");
-		//通过键值对的方式获取用户名和密码
-		String account = request.getParameter("merchantAccount");
-		String pwd = request.getParameter("merchantPassword");
-		List<Barber> list = barberService.getBarberListByMerchant(account, pwd);
-		for(Barber b:list) {
-			System.out.println("名称" + b.getBarberName());
+	public List<Barber> getBarberListByMerchant(@RequestBody String merchantJson, @RequestHeader(value="MerchantToken") String token){
+		Merchant merchant = merchantService.getMerchantByToken(token);
+		Set<Barber> barberSet = merchant.getShop().getBarberSet();
+		List<Barber> list = new ArrayList<>();
+		for(Barber b: barberSet) {
+			list.add(b);
 		}
 		return list;
 	}
@@ -87,28 +91,47 @@ public class BarberAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/addBarber",method = RequestMethod.POST)
-	public boolean addBarber(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestBody String barberJson) {
+	public String  addBarber(HttpServletRequest request,HttpServletResponse response,HttpSession session,@RequestBody String barberJson) {
 		System.out.println("添加理发师");
 		String account = request.getParameter("UserAccount");
 		String password = request.getParameter("UserPassword");
 		String merchantaccount = request.getParameter("merchantAccount");//店铺账号
 		String merchantpassword = request.getParameter("merchantPassword");
 		//判断理发师的用户是否存在
-		if(userService.checkLoginUser(account, password) != null) {
-			Merchant m = merchantService.checkMerchantLogin(merchantaccount, merchantpassword);
-			boolean result = barberService.addBarber(account,password,m.getMerchantId());
-			if(result) {
-				//添加成功
-				System.out.println("理发师添加成功");
-				return true;
+		Users user = userService.checkLoginUser(account, password);
+		//判断用户是否存在
+		if(user != null) {
+			//判断用户的收藏 是否存在收藏对象 如果没有收藏可以添加 否则不允许添加
+			List<Collections> list = collectionService.findListCollectionsByUser(user);
+			
+			if(list.size()==0) {
+				//判断用户是否在其他店铺存在 true表示 用户可添加 其他店铺不存在
+				if(barberService.JudgeUserAlreadyExistsInBarber(user.getUserId())) {
+					Merchant m = merchantService.checkMerchantLogin(merchantaccount, merchantpassword);
+					boolean result = barberService.addBarber(account,password,m.getMerchantId());
+					if(result) {
+						//添加成功
+						System.out.println("理发师添加成功");
+						return "success";
+					}else {
+						//添加失败
+						System.out.println("理发师添加失败");
+						return "AddFalse";
+					}
+				}else {//返回用户不可添加 已经存在在其他店铺中
+					System.out.println("返回用户不可添加 已经存在在其他店铺中");
+					return "AlreadyExistsInBarber";
+				}
 			}else {
-				//添加失败
-				System.out.println("理发师添加失败");
-				return false;
+				System.out.println("用户存在收藏 ");
+				return "userExistsCollection";
 			}
+			
+			
 		}else {
 			//理发师的用户或密码错误
-			return false;
+			System.out.println("理发师的用户或密码错误");
+			return "AccountOrPassWordFalse";
 		}
 	}
 
