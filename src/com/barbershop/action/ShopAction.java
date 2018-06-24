@@ -118,10 +118,15 @@ public class ShopAction {
 		}
 		//删除店铺图片中去掉的图片
 		for(ShopPicture sp: oldShop.getShopPictureSet()) {
-			for(ShopPicture sp2: newShop.getShopPictureSet()) {
-				if(!sp.getShoppicture_picture().equals(sp2.getShoppicture_picture())) {
-					util.deleteMerchantPic(sp.getShoppicture_picture());
+			boolean has = false;
+			for(ShopPicture sp2: newShop.getShopPictureSet()) {	
+				if(sp.getShoppicture_picture().equals(sp2.getShoppicture_picture())) {
+					has = true;
+					break;
 				}
+			}
+			if(!has) {
+				util.deleteMerchantPic(sp.getShoppicture_picture());
 			}
 		}	
 	}
@@ -154,7 +159,9 @@ public class ShopAction {
 				.setPrettyPrinting()
 				.create();
 		Shop shop = gson.fromJson(data, Shop.class);
+		ss.saveShop(shop);
 		merchant.setShop(shop);
+		merchant.setOpenSuccess(1);
 		mService.updateMerchant(merchant);
 	}
 	
