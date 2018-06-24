@@ -86,10 +86,11 @@ public class UserDao {
 	 * @param UserAccount
 	 * @return
 	 */
-	public String findUserNameByUserAccountss(String UserAccount) {
+
+	public String findUserNameByUserAccountss(String userAccount) {
 		return (String)this.getSession()
 				.createQuery("select UserName from Users where UserAccount = ?")
-				.setParameter(0, UserAccount)
+				.setParameter(0, userAccount)
 				.uniqueResult();
 	}
 }

@@ -32,6 +32,8 @@ public class UploadPictureUtil {
 	private final String PRODUCTION = "/production";
 	//店铺展示图片（轮播）
 	private final String SHOP_IMAGE = "/shopImage";
+	//默认头像路径
+	private final String defaultHeader = "resource/user/head/barberHead.jpg";
 
 	/**
 	 * 初始化用户图片资源目录,用户注册时调用一次
@@ -146,7 +148,7 @@ public class UploadPictureUtil {
 		String realPath = USER + str;
 		File file = new File(realPath);
 		Date date = new Date();
-		if(file.exists() && file.isFile()) {
+		if(file.exists() && file.isFile() && !user.getUserHeader().equals(defaultHeader)) {
 			file.delete();
 		}
 		byte[] bs;
