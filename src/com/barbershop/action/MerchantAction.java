@@ -3,7 +3,6 @@ package com.barbershop.action;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,17 +11,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.barbershop.bean.Activity;
-import com.barbershop.bean.Barber;
 import com.barbershop.bean.Merchant;
-import com.barbershop.bean.Users;
 import com.barbershop.service.MerchantService;
-import com.barbershop.utils.UploadPictureUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -110,22 +104,5 @@ public class MerchantAction {
 			}
 		}
 	}
-
-	/**
-	 * 通过用户名密码获得店铺活动列表
-	 */
-	@ResponseBody
-	@RequestMapping(value="/merchantGetMerchantActivity", method = RequestMethod.POST)
-	public List<Activity> getActivityList(HttpServletRequest request,HttpServletResponse response,@RequestBody String merchantJson){
-		System.out.println("活动列表");
-		//通过键值对的方式获取用户名和密码
-		String account = request.getParameter("merchantAccount");
-		String pwd = request.getParameter("merchantPassword");
-		List<Activity> list = ms.getActivityList(account, pwd);
-		return list;
-	}
-	
-
-	
 	
 }

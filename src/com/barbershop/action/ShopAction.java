@@ -2,8 +2,6 @@ package com.barbershop.action;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.barbershop.bean.HairStyle;
 import com.barbershop.bean.Merchant;
 import com.barbershop.bean.Shop;
 import com.barbershop.bean.ShopPicture;
@@ -144,5 +141,21 @@ public class ShopAction {
 		return shop;
 	}
 	
+	/**
+	 * 添加店铺信息
+	 * @param data
+	 * @param token
+	 */
+	@RequestMapping(value="/addShop", method=RequestMethod.POST)
+	public void addShop(@RequestBody String data, @RequestHeader(value="MerchantToken") String token) {
+		Merchant merchant = mService.getMerchantByToken(token);
+		Gson gson = new GsonBuilder()
+				.serializeNulls()
+				.setPrettyPrinting()
+				.create();
+		Shop shop = gson.fromJson(data, Shop.class);
+		merchant.setShop(shop);
+		mService.updateMerchant(merchant);
+	}
 	
 }

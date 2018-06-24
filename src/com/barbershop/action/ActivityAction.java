@@ -26,7 +26,7 @@ public class ActivityAction {
 	private ActivityService aService;
 	
 	/**
-	 * 通过用户名密码获得店铺活动列表
+	 * 获得店铺活动列表
 	 */
 	@ResponseBody
 	@RequestMapping(value="/getActivityList", method = RequestMethod.POST)

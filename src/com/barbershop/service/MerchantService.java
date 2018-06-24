@@ -1,15 +1,10 @@
 package com.barbershop.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.barbershop.bean.Activity;
-import com.barbershop.bean.HairStyle;
 import com.barbershop.bean.Merchant;
-import com.barbershop.bean.Shop;
 import com.barbershop.dao.MerchantDao;
 
 @Service
@@ -48,11 +43,6 @@ public class MerchantService {
 		return merchantdao.findMerchantByToken(merchantToken);
 	}
 	
-	//通过用户名和密码获取活动列表
-	public List<Activity> getActivityList(String account, String pwd){
-		return merchantdao.getActivityList(account,pwd);
-	}
-	
 	/**
 	 * 通过token获取merchant对象
 	 * @param token
@@ -60,6 +50,10 @@ public class MerchantService {
 	 */
 	public Merchant getMerchantByToken(String token) {
 		return merchantdao.getMerchantByToken(token);
+	}
+	
+	public void updateMerchant(Merchant merchant) {
+		merchantdao.updateMerchantInformation(merchant);
 	}
 
 }

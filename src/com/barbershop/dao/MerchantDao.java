@@ -1,19 +1,12 @@
 package com.barbershop.dao;
 
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.barbershop.bean.Activity;
-import com.barbershop.bean.Barber;
-import com.barbershop.bean.HairStyle;
 import com.barbershop.bean.Merchant;
-import com.barbershop.bean.Shop;
 
 @Repository
 public class MerchantDao {
@@ -82,19 +75,6 @@ public class MerchantDao {
 		return merchant;
 	}
 	
-	//根据用户名和密码返回活动列表
-	public List<Activity> getActivityList(String account,String pwd){
-		Merchant merchant = (Merchant) this.getSession()
-				.createQuery("from Merchant where merchantAccount = ? and merchantPassword = ?")
-				.setParameter(0, account).setParameter(1, pwd).uniqueResult();
-		List<Activity> list = this.getSession()
-				.createSQLQuery( " select * from activity where shop_id = ? " )
-				.setParameter(0, merchant.getShop().getShopId())
-				.addEntity(Activity.class )
-				.list();
-		return list;
-	}
-	
 	/**
 	 * 通过token获取店铺对象
 	 * @param token
@@ -104,6 +84,14 @@ public class MerchantDao {
 		return (Merchant) this.getSession().createQuery("from Merchant where merchantToken = ?")
 				.setParameter(0, token)
 				.uniqueResult();
+	}
+	
+	/**
+	 * 更新店铺信息
+	 * @param merchant
+	 */
+	public void updateMerchantInformation(Merchant merchant) {
+		this.getSession().update(merchant);
 	}
 
 }
