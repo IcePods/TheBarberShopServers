@@ -15,9 +15,9 @@ import sun.misc.BASE64Decoder;
 
 public class UploadPictureUtil {
 	//用户头像图片存储的绝对路径
-	private final String USER = "E://eclipse_workspace/theBarberShopServiceImageResource/user";
+	private final String USER = "C://Desktop/theBarberShopServiceImageResource/user";
 	//店铺用户图片存储的路径
-	private final String MERCHANT = "E://eclipse_workspace/theBarberShopServiceImageResource/merchant";
+	private final String MERCHANT = "C://Desktop/theBarberShopServiceImageResource/merchant";
 
 	//访问用户图片的虚拟路径
 	private final String USER_PATH = "resource/user";

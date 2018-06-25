@@ -42,7 +42,7 @@ public class DynamicAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/showAllDynamic", method = RequestMethod.POST)
-	public List<Dynamic> getAllDynamic (){
+	public List<Dynamic> getAllDynamic (@RequestBody String data){
 		System.out.println("动态请求");
 		List<Dynamic> DynamicList = DService.showAllDynamic();
 		System.out.println("动态请求成功！");

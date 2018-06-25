@@ -344,7 +344,7 @@ public class UsersAction {
 		System.out.println("根据用户account 查找用户昵称");
 		String UserAccount = request.getParameter("BarberAccount");
 		System.out.println("BarberAccount:"+UserAccount);
-		String UserName =us.findUserNameByUserAccountss(UserAccount);
+		String UserName =us.findUserNameByUserAccount(UserAccount);
 		System.out.println(UserName);
 		Users user = new Users();
 		user.setUserName(UserName);

@@ -85,7 +85,7 @@ public class UserDao {
 	 * @return
 	 */
 
-	public String findUserNameByUserAccountss(String userAccount) {
+	public String findUserNameByUserAccount(String userAccount) {
 		return (String)this.getSession()
 				.createQuery("select UserName from Users where UserAccount = ?")
 				.setParameter(0, userAccount)
