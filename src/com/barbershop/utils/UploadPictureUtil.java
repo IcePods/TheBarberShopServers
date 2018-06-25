@@ -15,9 +15,9 @@ import sun.misc.BASE64Decoder;
 
 public class UploadPictureUtil {
 	//用户头像图片存储的绝对路径
-	private final String USER = "C://Desktop/theBarberShopServiceImageResource/user";
+	private final String USER = "E://eclipse_workspace/theBarberShopServiceImageResource/user";
 	//店铺用户图片存储的路径
-	private final String MERCHANT = "C://Desktop/theBarberShopServiceImageResource/merchant";
+	private final String MERCHANT = "E://eclipse_workspace/theBarberShopServiceImageResource/merchant";
 
 	//访问用户图片的虚拟路径
 	private final String USER_PATH = "resource/user";
@@ -89,20 +89,6 @@ public class UploadPictureUtil {
 		if(!dirFile.exists()) {
 			createFolder(str);
 		}
-
-		//如果店铺用户头像文件夹没有存在，创建user文件夹
-		str = MERCHANT + "/" + merchantAccount + HEAD;
-		dirFile = new File(str);
-		if(!dirFile.exists()) {
-			createFolder(str);
-		}
-
-		//如果店铺用户动态文件夹没有存在，创建user文件夹
-		str = MERCHANT + "/" + merchantAccount + DYNAMIC;
-		dirFile = new File(str);
-		if(!dirFile.exists()) {
-			createFolder(str);
-		}	
 
 		//如果店铺用户动态文件夹没有存在，创建user文件夹
 		str = MERCHANT + "/" + merchantAccount + PRODUCTION;
@@ -202,38 +188,6 @@ public class UploadPictureUtil {
 		return picPathList;
 	}
 
-
-	/**
-	 * 接收店铺上传的动态图片，保存到服务器图片资源目录
-	 * @param picList
-	 */
-	public List<String> receiveMerchantDynamicPic(List<String> picList, String merchantAccount) {
-		List<String> picPathList = new ArrayList<String>();
-		Date date = new Date();
-		int i = 1;
-		byte[] bs;
-		for(String pic: picList) {
-			try {
-				bs = new BASE64Decoder().decodeBuffer(pic);
-				//获取当前时间，精确到毫秒
-				DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmssSSS");	
-				String name = dateFormat.format(date).toString() + i;
-				i++;
-				FileOutputStream fos = new FileOutputStream( MERCHANT + "/" + merchantAccount + DYNAMIC + "/" + name + ".png");
-
-				fos.write(bs);
-				fos.flush();
-				fos.close();
-				String path = MERCHANT_PATH + "/" + merchantAccount + DYNAMIC + "/" + name + ".png";
-				picPathList.add(path);
-			} catch (IOException e) {
-				// TODO 自动生成的 catch 块
-				e.printStackTrace();
-			}
-
-		}
-		return picPathList;
-	}
 
 	/**
 	 * 接收店铺上传的头像图片
