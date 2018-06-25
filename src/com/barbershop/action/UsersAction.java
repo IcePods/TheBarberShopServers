@@ -2,7 +2,11 @@ package com.barbershop.action;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +26,7 @@ import com.barbershop.service.UserService;
 import com.barbershop.utils.UploadPictureUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 @Controller
 public class UsersAction {
@@ -351,5 +356,22 @@ public class UsersAction {
 		return user;	
 	}
 	
+	@RequestMapping(value = "/QueryUserListNameByUserAccount", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> QueryUserListNameByUserAccount(@RequestBody String data,HttpServletRequest request,HttpServletResponse response,HttpSession session) {
+		System.out.println("会话查询用户名称列表");
+		List<String> UserAccountlist = new ArrayList<>();
+		Gson gson1 = new Gson();
+		System.out.println("对象列表"+data);
+		UserAccountlist=gson1.fromJson(data,new TypeToken<List<String>>(){}.getType());
+		Map<String,String> returnNameMap = new HashMap<>();
+		for(String UserAccount:UserAccountlist) {
+			String UserName =us.findUserNameByUserAccount(UserAccount);
+			returnNameMap.put(UserAccount, UserName);
+			System.out.println("用户账号"+UserAccount+"用户名称"+UserName);
+		}
+		return returnNameMap;
+
+	}
 	
 }
